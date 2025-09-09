@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #7cabd6; /* light gray */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  h1 {
+    text-align: right;
+    color: #111827;
+    margin-bottom: 20px;
+  }
+  #main-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 0px;
+
+    justify-content: center;
+    align-items: flex-start;
+  }
+  #home-screen,
+  #game-screen,
+  #question-form-screen {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #3b82f6; /* blue-500 */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+  }
+
+  button:hover {
+    background-color: #2563eb; /* blue-600 */
+  }
+
+  textarea,
+  input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  label {
+    font-weight: 500;
+    color: #374151;
+  }
+
+  #feedback {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+    color: #111;
+  }
+</style>
+  <meta charset="UTF-8" />
+  <title>Hipster Trivia</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1 id="main-title">Hipster Trivia</h1>
+
+<div id="home-screen">
+  <button id="start-game-btn">Start Game</button>
+  <button id="add-question-btn">Add Question</button>
+</div>
+
+<div id="game-screen" style="display: none;">
+  <div id="question-display"></div>
+  <input type="text" id="user-answer" placeholder="Type your answer..." />
+  <button id="submit-answer-btn">Submit Answer</button>
+  <p id="feedback"></p>
+</div>
+
+<div id="question-form-screen" style="display: none;">
+  <form id="submit-question-form">
+    <h2>Submit a Question</h2>
+    <label>
+      Question: <br />
+      <textarea id="question-text" required></textarea>
+    </label><br />
+
+    <label>
+      Acceptable Answers (comma separated): <br />
+      <input id="acceptable-answers" required />
+    </label><br />
+
+    <label>
+      Image URL or Text (optional): <br />
+      <input id="image-or-text" />
+    </label><br />
+
+    <button type="submit">Add Question</button>
+  </form>
+</div>
+  <script src="model.js"></script>
+  <script src="view.js"></script>
+  <script src="controller.js"></script>
+</body>
+</html>
