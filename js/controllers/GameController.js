@@ -6,6 +6,8 @@ const GameController = (() => {
   const startGameBtn = document.getElementById("start-game-btn");
   const addQuestionBtn = document.getElementById("add-question-btn");
   const answerBtn = document.getElementById("submit-answer-btn");
+  const adminBtn = document.getElementById("admin-view-btn");
+  const adminBackBtn = document.getElementById("admin-back-btn");
 
   // ------------------ screen switching ------------------
   const switchScreen = (screenName) => {
@@ -50,6 +52,23 @@ const GameController = (() => {
     switchScreen("home");
   };
 
+  // ------------------ admin view -----------------------
+  const showAdminView = () => {
+    const tags = Model.getAllTags();
+    View.renderTags(tags);
+    View.showScreen("admin");
+    // Show all questions by default
+    QuestionListView.renderAllQuestions(Model.getQuestions());
+  };
+
+  const handleTagClick = (e) => {
+    if (e.target.classList.contains("tag-btn")) {
+      const tag = e.target.dataset.tag;
+      const filtered = Model.getQuestions([tag]);
+      QuestionListView.renderAllQuestions(filtered);
+    }
+  };
+
   // ------------------ initialization -------------------
   const init = () => {
     Model.load();
@@ -58,6 +77,12 @@ const GameController = (() => {
     addQuestionBtn.addEventListener("click", () => switchScreen("form"));
     form.addEventListener("submit", submitNewQuestion);
     answerBtn.addEventListener("click", submitAnswer);
+
+    // Admin view
+    adminBtn.style.display = "inline-block"; // Show for now; add real auth for production
+    adminBtn.addEventListener("click", showAdminView);
+    adminBackBtn.addEventListener("click", () => switchScreen("home"));
+    document.getElementById("tag-list").addEventListener("click", handleTagClick);
   };
 
   return { init };

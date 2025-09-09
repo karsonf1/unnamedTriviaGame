@@ -49,6 +49,11 @@ const Model = (() => {
       return hasInclude && !hasExclude;
     });
   };
-
-  return { load, save, addQuestion, getRandomQuestion, getQuestions };
+  
+  const getAllTags = () => {
+    const tagSet = new Set();
+    questions.forEach(q => (q.tags || []).forEach(tag => tagSet.add(tag)));
+    return Array.from(tagSet);
+  }
+  return { load, save, addQuestion, getRandomQuestion, getQuestions, getAllTags };
 })();

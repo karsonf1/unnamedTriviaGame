@@ -4,7 +4,7 @@
   <style>
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #7cabd6; /* light gray */
+    background-color: #FFC7A7; /* light gray */
     margin: 0;
     padding: 0;
     display: flex;
@@ -86,6 +86,7 @@
 <div id="home-screen">
   <button id="start-game-btn">Start Game</button>
   <button id="add-question-btn">Add Question</button>
+  <button id="admin-view-btn" style="display:none;">Admin:Browse Questions</button>
 </div>
 
 <div id="game-screen" style="display: none;">
@@ -116,6 +117,15 @@
     <button type="submit">Add Question</button>
   </form>
 </div>
+
+<div id="admin-screen" style="display:none;">
+  <h2>Browse Questions by Tag</h2>
+  <div id="tag-list"></div>
+  <div id="all-questions-list"></div>
+  <button id="admin-back-btn">Back</button>
+</div>
+
+<script src="js/views/View.js"></script>
 <script src="js/views/QuestionView.js"></script>
 <script src="js/views/QuestionListView.js"></script>
 <script src="js/models/Model.js"></script>

@@ -28,3 +28,4 @@ const QuestionListView = (() => {
 
   return { renderAllQuestions };
 })();
+window.QuestionListView = QuestionListView;
