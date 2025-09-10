@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="assets/fonts/custom-font.css">
   <style>
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #FFC7A7; /* light gray */
+    background-color: #F08787; /* light orange */
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    min-height: 100vh;
   }
 
   h1 {
@@ -19,17 +17,39 @@
     margin-bottom: 20px;
   }
   #main-title {
+    font-family: 'MightySouly', sans-serif;
     font-size: 2.5em;
-    font-weight: bold;
-    margin-bottom: 0px;
-
-    justify-content: center;
-    align-items: flex-start;
+    font-weight: normal;
+    color: #FFC7A7;
+    text-align: center;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    width: 100vw;
+    letter-spacing: 2px;
+    display: block;
   }
-  #home-screen,
+  #home-screen {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    background-color: #F8FAB4;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   #game-screen,
   #question-form-screen {
-    background-color: white;
+    background-color: #F8FAB4;
     padding: 30px 40px;
     border-radius: 16px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -42,8 +62,8 @@
 
   button {
     padding: 10px 20px;
-    background-color: #3b82f6; /* blue-500 */
-    color: white;
+    background-color: #FEE2AD; /* blue-500 */
+    color: #F08787;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -128,7 +148,9 @@
 <script src="js/views/View.js"></script>
 <script src="js/views/QuestionView.js"></script>
 <script src="js/views/QuestionListView.js"></script>
+
 <script src="js/models/Model.js"></script>
+<script src="js/models/addAllPokemonQuestions.js"></script>
 <script src="js/controllers/GameController.js"></script>
 <script src="js/controllers/QuestionController.js"></script>
 

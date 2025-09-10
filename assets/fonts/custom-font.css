@@ -1,0 +1,10 @@
+/* Example custom font-face skeleton for your project */
+@font-face {
+  font-family: 'MightySouly';
+  src: 
+       url('../MightySouly.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+

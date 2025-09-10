@@ -3,12 +3,15 @@ const View = (() => {
     home: document.getElementById("home-screen"),
     game: document.getElementById("game-screen"),
     form: document.getElementById("question-form-screen"),
-    admin: document.getElementById("admin-screen"), // add this line
+    admin: document.getElementById("admin-screen"),
   };
 
   const showScreen = (screenName) => {
     Object.values(screens).forEach(screen => (screen.style.display = "none"));
-    if (screens[screenName]) screens[screenName].style.display = "flex";
+    if (screens[screenName]) {
+      // For admin, use block to allow grid layouts
+      screens[screenName].style.display = screenName === "admin" ? "block" : "flex";
+    }
     // Optionally clear feedback when switching screens
     const feedback = document.getElementById("feedback");
     if (feedback) feedback.textContent = "";
