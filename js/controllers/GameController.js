@@ -57,15 +57,13 @@ const GameController = (() => {
     const tags = Model.getAllTags();
     View.renderTags(tags);
     View.showScreen("admin");
-    // Show all questions by default
-    QuestionListView.renderAllQuestions(Model.getQuestions());
   };
 
   const handleTagClick = (e) => {
     if (e.target.classList.contains("tag-btn")) {
       const tag = e.target.dataset.tag;
-      const filtered = Model.getQuestions([tag]);
-      QuestionListView.renderAllQuestions(filtered);
+      console.log('GameController: handleTagClick called with tag:', tag);
+      QuestionListView.renderQuestionsByTag(tag);
     }
   };
 

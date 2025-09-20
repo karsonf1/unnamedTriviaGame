@@ -57,3 +57,25 @@ const Model = (() => {
   }
   return { load, save, addQuestion, getRandomQuestion, getQuestions, getAllTags };
 })();
+window.Model = Model;
+
+// Migration: Convert string tags to arrays for all questions
+(function fixQuestionTags() {
+  if (!window.Model || typeof window.Model.getQuestions !== 'function') return;
+  const questions = window.Model.getQuestions();
+  let changed = false;
+  questions.forEach(q => {
+    if (typeof q.tags === 'string') {
+      q.tags = [q.tags.trim()];
+      changed = true;
+    }
+  });
+  if (changed && typeof window.Model.saveQuestions === 'function') {
+    window.Model.saveQuestions(questions);
+    console.log('Fixed string tags to arrays for all questions.');
+  } else if (changed) {
+    console.log('Tags fixed in memory, but Model.saveQuestions not found.');
+  } else {
+    console.log('No string tags found to fix.');
+  }
+})();
