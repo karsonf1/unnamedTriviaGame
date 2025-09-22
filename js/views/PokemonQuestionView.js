@@ -28,7 +28,14 @@ const PokemonQuestionView = (() => {
     ).join("");
     // Add click listeners for preview
     grid.querySelectorAll(".pokemon-img-box").forEach((box, i) => {
-      box.onclick = () => showQuestionPreview(questions[i]);
+      box.onclick = () => {
+        // Hide pokemon screen and show the question using QuestionView
+        pokemonScreen.style.display = "none";
+        if (window.View && window.QuestionView) {
+          window.View.showScreen("game");
+          window.QuestionView.renderQuestion(questions[i]);
+        }
+      };
     });
     // Back button
     const backBtn = pokemonScreen.querySelector("#pokemon-back-btn");
@@ -36,17 +43,6 @@ const PokemonQuestionView = (() => {
       pokemonScreen.style.display = "none";
       if (window.View) window.View.showScreen("admin");
     };
-  }
-
-  function showQuestionPreview(questionObj) {
-    if (window.View && window.QuestionView) {
-      pokemonScreen.style.display = "none";
-      window.View.showScreen("game");
-      window.QuestionView.renderQuestion(questionObj);
-      document.getElementById("user-answer").style.display = "none";
-      document.getElementById("submit-answer-btn").style.display = "none";
-      document.getElementById("feedback").style.display = "none";
-    }
   }
 
   return { renderGrid };

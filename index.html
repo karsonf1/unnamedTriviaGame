@@ -58,6 +58,11 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   button {
@@ -72,7 +77,8 @@
   }
 
   button:hover {
-    background-color: #2563eb; /* blue-600 */
+    background-color: #F08787; 
+    color: #FEE2AD;
   }
 
   textarea,
@@ -82,6 +88,16 @@
     border: 1px solid #d1d5db;
     border-radius: 8px;
     font-size: 16px;
+  }
+
+  input#user-answer {
+    transition: border-color 0.2s ease;
+  }
+
+  input#user-answer:focus {
+    outline: none;
+    border-color: #F08787;
+    box-shadow: 0 0 0 2px rgba(240, 135, 135, 0.2);
   }
 
   label {
@@ -110,9 +126,10 @@
 </div>
 
 <div id="game-screen" style="display: none;">
+  <div id="timer-display" style="font-size: 24px; font-weight: bold; text-align: center; color: #F08787; margin-bottom: 10px;">Time: 10</div>
   <div id="question-display"></div>
-  <input type="text" id="user-answer" placeholder="Type your answer..." />
-  <button id="submit-answer-btn">Submit Answer</button>
+  <input type="text" id="user-answer" placeholder="what you thinking" />
+  <!-- Submit button removed to prevent spam -->
   <p id="feedback"></p>
 </div>
 

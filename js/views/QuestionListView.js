@@ -95,9 +95,28 @@ const QuestionListView = (() => {
       `;
       
       // Add click listeners for pokemon boxes
-      allQuestionsList.querySelectorAll(".pokemon-box").forEach((box, i) => {
-        box.onclick = () => showQuestionPreview(questionsWithTag[i]);
-      });
+      console.log('About to add click listeners. Checking dependencies:');
+      console.log('window.View exists:', !!window.View);
+      console.log('window.QuestionView exists:', !!window.QuestionView);
+      console.log('Number of pokemon boxes found:', allQuestionsList.querySelectorAll(".pokemon-box").length);
+      
+      if (window.View && window.QuestionView) {
+        allQuestionsList.querySelectorAll(".pokemon-box").forEach((box, i) => {
+          console.log('Adding click listener to pokemon box', i);
+          box.onclick = () => {
+            console.log('Pokemon box clicked, index:', i);
+            console.log('Switching to game screen...');
+            window.View.showScreen("game");
+            console.log('Rendering question:', questionsWithTag[i]);
+            window.QuestionView.renderQuestion(questionsWithTag[i]);
+          };
+        });
+        console.log('Successfully added all click listeners');
+      } else {
+        console.error('Dependencies missing:');
+        console.error('window.View:', window.View);
+        console.error('window.QuestionView:', window.QuestionView);
+      }
     } else {
       // For all other categories, show as a list with question details
       allQuestionsList.innerHTML = `
@@ -119,29 +138,15 @@ const QuestionListView = (() => {
       
       // Add click listeners for question items
       allQuestionsList.querySelectorAll(".question-item").forEach((item, i) => {
-        item.onclick = () => showQuestionPreview(questionsWithTag[i]);
+        item.onclick = () => {
+          // Simply show the question using QuestionView - that's what preview is
+          if (window.View && window.QuestionView) {
+            window.View.showScreen("game");
+            window.QuestionView.renderQuestion(questionsWithTag[i]);
+          }
+        };
       });
     }
-  }
-
-  // Show preview of a question as in the game
-  function showQuestionPreview(questionObj) {
-    // Reuse the game screen and QuestionView
-    if (window.View && window.QuestionView) {
-      window.View.showScreen("game");
-      window.QuestionView.renderQuestion(questionObj);
-      // Optionally hide answer input/submit for preview
-      document.getElementById("user-answer").style.display = "none";
-      document.getElementById("submit-answer-btn").style.display = "none";
-      document.getElementById("feedback").style.display = "none";
-    }
-  }
-
-  // Restore game screen to normal (show answer input, etc)
-  function restoreGameScreen() {
-    document.getElementById("user-answer").style.display = "";
-    document.getElementById("submit-answer-btn").style.display = "";
-    document.getElementById("feedback").style.display = "";
   }
 
   // Main entry: render all categories/tags
@@ -178,7 +183,6 @@ const QuestionListView = (() => {
     // Render category buttons
     renderCategoryButtons(uniqueTags);
     allQuestionsList.innerHTML = "<p>Select a category to view questions.</p>";
-    restoreGameScreen();
   }
 
   return { renderAdminView, renderQuestionsByTag };

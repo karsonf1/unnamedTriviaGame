@@ -35,3 +35,4 @@ const View = (() => {
 
   return { showScreen, renderQuestion, showFeedback, renderTags };
 })();
+window.View = View;

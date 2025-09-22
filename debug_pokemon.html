@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Pokemon Clicks</title>
+    <style>
+        .pokemon-box {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 8px;
+            width: 120px;
+            height: 120px;
+        }
+        .pokemon-box:hover {
+            background: #f0f0f0;
+        }
+        #debug-output {
+            margin: 20px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pokemon Click Debug</h1>
+    <div id="debug-output">
+        <p>Loading...</p>
+    </div>
+    
+    <div id="pokemon-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; padding: 20px;">
+        <!-- Pokemon boxes will be inserted here -->
+    </div>
+
+    <script>
+        // Simple debug test
+        function debugLog(message) {
+            const output = document.getElementById('debug-output');
+            output.innerHTML += '<p>' + message + '</p>';
+            console.log(message);
+        }
+
+        function createTestPokemonBox(index) {
+            const container = document.getElementById('pokemon-container');
+            const pokemonBox = document.createElement('div');
+            pokemonBox.className = 'pokemon-box';
+            pokemonBox.setAttribute('data-idx', index);
+            pokemonBox.innerHTML = `
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png" 
+                     alt="Pokemon ${index + 1}" 
+                     style="max-width: 80px; max-height: 80px; object-fit: contain;"
+                     onerror="this.style.display='none'"/>
+            `;
+            
+            // Add click handler
+            pokemonBox.onclick = function() {
+                debugLog(`Pokemon box ${index + 1} clicked!`);
+                alert(`You clicked Pokemon #${index + 1}!`);
+            };
+            
+            container.appendChild(pokemonBox);
+            debugLog(`Created Pokemon box ${index + 1}`);
+        }
+
+        // Create a few test Pokemon boxes
+        debugLog('Starting Pokemon box creation...');
+        for (let i = 0; i < 9; i++) {
+            createTestPokemonBox(i);
+        }
+        debugLog('Finished creating Pokemon boxes. Try clicking them!');
+    </script>
+</body>
+</html>
