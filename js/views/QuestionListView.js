@@ -76,6 +76,13 @@ const QuestionListView = (() => {
     
     console.log(`Found ${questionsWithTag.length} questions with tag "${tagToFilter}"`);
     
+    // Debug: Show which questions have multiple tags
+    questionsWithTag.forEach(q => {
+      if (q.tags && q.tags.length > 1) {
+        console.log(`Multi-tag question: "${q.question}" has tags: [${q.tags.join(', ')}]`);
+      }
+    });
+    
     if (questionsWithTag.length === 0) {
       allQuestionsList.innerHTML = `<p>No questions found in the "${tagToFilter}" category.</p>`;
       return;
@@ -125,8 +132,11 @@ const QuestionListView = (() => {
           ${questionsWithTag.map((q, i) => `
             <div class="question-item" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 16px; cursor: pointer;" data-idx="${i}">
               <div style="font-weight: bold; margin-bottom: 8px;">Q: ${q.question}</div>
-              <div style="color: #666; font-size: 14px;">
+              <div style="color: #666; font-size: 14px; margin-bottom: 8px;">
                 Answer(s): ${Array.isArray(q.acceptableAnswers) ? q.acceptableAnswers.join(', ') : q.acceptableAnswers}
+              </div>
+              <div style="color: #888; font-size: 12px; margin-bottom: 8px;">
+                Tags: ${Array.isArray(q.tags) ? q.tags.map(tag => `<span style="background: #e2e8f0; padding: 2px 6px; border-radius: 4px; margin-right: 4px;">${tag}</span>`).join('') : 'none'}
               </div>
               ${q.imageOrText && q.imageOrText.startsWith('http') ? 
                 `<div style="margin-top: 8px;"><img src="${q.imageOrText}" alt="Question image" style="max-width: 100px; max-height: 100px; object-fit: contain;"/></div>` : 

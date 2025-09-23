@@ -151,6 +151,12 @@
       <input id="image-or-text" />
     </label><br />
 
+    <label>
+      Tags (comma separated, max 3): <br />
+      <input id="tags-input" placeholder="e.g. music, food, entertainment" />
+      <small style="color: #666; font-size: 12px;">Questions will appear when ANY of their tags are selected</small>
+    </label><br />
+
     <button type="submit">Add Question</button>
   </form>
 </div>
@@ -168,6 +174,7 @@
 <script src="js/views/PokemonQuestionView.js"></script>
 
 <script src="js/models/Model.js"></script>
+<script src="js/models/DefaultCategories.js"></script>
 <script src="js/models/addAllPokemonQuestions.js"></script>
 <script src="js/controllers/GameController.js"></script>
 <script src="js/controllers/QuestionController.js"></script>

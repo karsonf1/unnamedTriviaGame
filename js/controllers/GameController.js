@@ -137,12 +137,40 @@ const GameController = (() => {
       .split(",")
       .map(a => a.trim().toLowerCase());
     const imageOrText = document.getElementById("image-or-text").value.trim();
+    const tagsInput = document.getElementById("tags-input");
+    
+    // Process tags with validation
+    let tags = [];
+    if (tagsInput && tagsInput.value.trim()) {
+      tags = tagsInput.value.trim()
+        .split(",")
+        .map(t => t.trim().toLowerCase())
+        .filter(t => t) // Remove empty tags
+        .slice(0, 3); // Limit to 3 tags maximum
+    }
+    
+    // Default to "general" if no tags provided
+    if (tags.length === 0) {
+      tags = ["general"];
+    }
 
     if (!questionText || answers.length === 0) return;
 
-    Model.addQuestion({ question: questionText, acceptableAnswers: answers, imageOrText });
+    // Validate tag count
+    if (tags.length > 3) {
+      alert("Maximum of 3 tags allowed. Only the first 3 will be used.");
+      tags = tags.slice(0, 3);
+    }
+
+    Model.addQuestion({ 
+      question: questionText, 
+      acceptableAnswers: answers, 
+      imageOrText,
+      tags: tags
+    });
+    
     form.reset();
-    alert("Question added!");
+    alert(`Question added with tags: ${tags.join(", ")}`);
     switchScreen("home");
   };
 
