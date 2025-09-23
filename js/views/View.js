@@ -4,6 +4,9 @@ const View = (() => {
     game: document.getElementById("game-screen"),
     form: document.getElementById("question-form-screen"),
     admin: document.getElementById("admin-screen"),
+    "create-room": document.getElementById("create-room-screen"),
+    "join-room": document.getElementById("join-room-screen"),
+    lobby: document.getElementById("lobby-screen"),
   };
 
   const showScreen = (screenName) => {

@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="assets/fonts/custom-font.css">
+  <!-- Socket.IO Client Library -->
+  <script src="/socket.io/socket.io.js"></script>
   <style>
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -46,7 +48,16 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-
+  #admin-screen {
+    background-color: #F8FAB4;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    position: relative;
+  }
   #game-screen,
   #question-form-screen {
     background-color: #F8FAB4;
@@ -120,7 +131,12 @@
   <h1 id="main-title">Hipster Trivia</h1>
 
 <div id="home-screen">
-  <button id="start-game-btn">Start Game</button>
+  <button id="start-game-btn">Start Solo Game</button>
+  <hr style="width: 100%; border: 1px solid #ddd; margin: 20px 0;">
+  <h3 style="text-align: center; margin: 10px 0; color: #666;">Multiplayer</h3>
+  <button id="create-room-btn">Create Room</button>
+  <button id="join-room-btn">Join Room</button>
+  <hr style="width: 100%; border: 1px solid #ddd; margin: 20px 0;">
   <button id="add-question-btn">Add Question</button>
   <button id="admin-view-btn" style="display:none;">Admin:Browse Questions</button>
 </div>
@@ -168,6 +184,48 @@
   <button id="admin-back-btn">Back</button>
 </div>
 
+<!-- Multiplayer Screens -->
+<div id="create-room-screen" style="display:none;">
+  <h2>Create Multiplayer Room</h2>
+  <label>
+    Your Name: <br />
+    <input id="host-name-input" placeholder="Enter your name" maxlength="20" />
+  </label><br />
+  <button id="create-room-submit">Create Room</button>
+  <button id="create-room-back">Back</button>
+</div>
+
+<div id="join-room-screen" style="display:none;">
+  <h2>Join Multiplayer Room</h2>
+  <label>
+    Your Name: <br />
+    <input id="player-name-input" placeholder="Enter your name" maxlength="20" />
+  </label><br />
+  <label>
+    Room Code: <br />
+    <input id="room-code-input" placeholder="Enter 6-character code" maxlength="6" style="text-transform: uppercase;" />
+  </label><br />
+  <button id="join-room-submit">Join Room</button>
+  <button id="join-room-back">Back</button>
+</div>
+
+<div id="lobby-screen" style="display:none;">
+  <h2>Game Lobby</h2>
+  <div id="room-info">
+    <h3>Room Code: <span id="room-code-display" style="font-family: monospace; background: #e2e8f0; padding: 4px 8px; border-radius: 4px;"></span></h3>
+    <p>Share this code with friends to join!</p>
+  </div>
+  <div id="players-section">
+    <h4>Players (<span id="player-count">0</span>):</h4>
+    <div id="player-list"></div>
+  </div>
+  <div id="lobby-controls">
+    <button id="start-multiplayer-game" style="display:none;">Start Game</button>
+    <button id="leave-room">Leave Room</button>
+  </div>
+  <div id="lobby-feedback"></div>
+</div>
+
 <script src="js/views/View.js"></script>
 <script src="js/views/QuestionView.js"></script>
 <script src="js/views/QuestionListView.js"></script>
@@ -178,6 +236,7 @@
 <script src="js/models/addAllPokemonQuestions.js"></script>
 <script src="js/controllers/GameController.js"></script>
 <script src="js/controllers/QuestionController.js"></script>
+<script src="js/controllers/MultiplayerController.js"></script>
 
 </body>
 </html>
