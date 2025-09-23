@@ -7,7 +7,7 @@
   <style>
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #F08787; /* light orange */
+    background-color: #ECF0F1; /* soft off-white base */
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -20,28 +20,29 @@
   }
   #main-title {
     font-family: 'MightySouly', sans-serif;
-    font-size: 2.5em;
+    font-size: 3.5em;
     font-weight: normal;
-    color: #FFC7A7;
+    color: #E67E22; /* warm muted orange */
     text-align: center;
-    margin-top: 32px;
-    margin-bottom: 16px;
+    margin-top: 40px;
+    margin-bottom: 25px;
     width: 100vw;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     display: block;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
   }
   #home-screen {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
     align-items: center;
     justify-content: center;
-    background-color: #F8FAB4;
-    padding: 30px 40px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
+    background-color: #F39C12; /* soft golden yellow */
+    padding: 40px 50px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 700px;
     margin: 0 auto;
     position: absolute;
     top: 50%;
@@ -49,26 +50,28 @@
     transform: translate(-50%, -50%);
   }
   #admin-screen {
-    background-color: #F8FAB4;
-    padding: 30px 40px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 800px;
-    margin: 20px auto;
+    background-color: #F39C12; /* soft golden yellow */
+    padding: 40px 50px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    width: 95%;
+    max-width: 1200px;
+    margin: 30px auto;
     position: relative;
   }
   #game-screen,
-  #question-form-screen {
-    background-color: #F8FAB4;
-    padding: 30px 40px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
+  #question-form-screen,
+  #create-room-screen,
+  #join-room-screen {
+    background-color: #F39C12; /* soft golden yellow */
+    padding: 40px 50px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 800px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 25px;
     margin: 0 auto;
     position: absolute;
     top: 50%;
@@ -76,39 +79,75 @@
     transform: translate(-50%, -50%);
   }
 
+  #lobby-screen {
+    background-color: #F39C12; /* soft golden yellow */
+    padding: 40px 50px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 900px;
+    margin: 30px auto;
+    position: relative;
+    top: 30px;
+  }
+
   button {
-    padding: 10px 20px;
-    background-color: #FEE2AD; /* blue-500 */
-    color: #F08787;
+    padding: 15px 30px;
+    background-color: #E67E22; /* warm muted orange */
+    color: #FFF;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.2s;
+    font-family: 'MightySouly', sans-serif;
+    font-weight: normal;
+    font-size: 18px;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    min-width: 200px;
   }
 
   button:hover {
-    background-color: #F08787; 
-    color: #FEE2AD;
+    background-color: #2C3E50; /* deep blue-gray contrast */
+    color: #FFF;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(44, 62, 80, 0.3);
   }
 
   textarea,
   input {
     width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 16px;
+    padding: 15px 20px;
+    border: 2px solid #E67E22; /* warm muted orange */
+    border-radius: 12px;
+    font-size: 18px;
+    transition: all 0.2s ease;
   }
 
   input#user-answer {
     transition: border-color 0.2s ease;
+    text-align: center;
+    font-size: 22px;
+    font-family: 'MightySouly', sans-serif;
+    color: #2C3E50; /* deep blue-gray contrast */
+    background-color: #FFF;
+    border: 3px solid #E67E22; /* warm muted orange */
+    padding: 20px 25px;
+    border-radius: 15px;
+    min-height: 60px;
   }
 
   input#user-answer:focus {
     outline: none;
-    border-color: #F08787;
-    box-shadow: 0 0 0 2px rgba(240, 135, 135, 0.2);
+    border-color: #2C3E50; /* deep blue-gray contrast */
+    box-shadow: 0 0 0 4px rgba(44, 62, 80, 0.2);
+    background-color: #FFFEF7;
+    transform: scale(1.02);
+  }
+
+  input#user-answer::placeholder {
+    color: #E67E22; /* warm muted orange */
+    opacity: 0.7;
+    text-align: center;
   }
 
   label {
@@ -122,6 +161,308 @@
     margin-top: 10px;
     color: #111;
   }
+
+  /* Question display styling */
+  #question-display {
+    text-align: center;
+    font-family: 'MightySouly', sans-serif;
+    color: #2C3E50; /* deep blue-gray contrast */
+    font-size: 22px;
+    line-height: 1.4;
+    margin: 30px 0;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #question-display p {
+    margin: 15px 0;
+  }
+
+  #question-display strong {
+    color: #2C3E50; /* deep blue-gray contrast */
+    font-size: 26px;
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  #question-display img {
+    display: block;
+    margin: 25px auto;
+    border-radius: 15px;
+    max-width: 90vw;
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: all 0.3s ease;
+    border-radius: 15px;
+  }
+
+  /* Dynamic image container for better scaling */
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 25px auto;
+    max-width: 90vw;
+    max-height: 70vh;
+    min-width: 200px;
+    min-height: 150px;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    background: transparent;
+  }
+
+  .image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 15px;
+    margin: 0;
+    box-shadow: none;
+    display: block;
+  }
+
+  /* Timer display styling */
+  #timer-display {
+    font-family: 'MightySouly', sans-serif;
+    font-size: 32px;
+    font-weight: normal;
+    text-align: center;
+    color: #2C3E50; /* deep blue-gray contrast */
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 15px 25px;
+    border-radius: 15px;
+    border: 2px solid #E67E22; /* warm muted orange */
+    display: inline-block;
+    min-width: 150px;
+  }
+
+  /* Multiplayer specific styling */
+  .multiplayer-title {
+    font-family: 'MightySouly', sans-serif;
+    font-size: 1.8em;
+    color: #2C3E50; /* deep blue-gray contrast */
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+
+  .room-code-display {
+    font-family: 'Courier New', monospace;
+    font-size: 1.5em;
+    font-weight: bold;
+    background: #E67E22; /* warm muted orange */
+    color: #FFF;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+    letter-spacing: 3px;
+    border: 2px solid #2C3E50; /* deep blue-gray contrast */
+    margin: 10px 0;
+  }
+
+  .player-item {
+    background: #FFF;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 6px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .player-item.host {
+    background: #E67E22; /* warm muted orange */
+    border: 2px solid #2C3E50; /* deep blue-gray contrast */
+    color: #FFF;
+  }
+
+  .player-name {
+    font-weight: bold;
+    color: #374151;
+  }
+
+  .host-badge {
+    background: #2C3E50; /* deep blue-gray contrast */
+    color: #FFF;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .section-divider {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #E67E22, transparent); /* warm muted orange */
+    margin: 20px 0;
+    border: none;
+  }
+
+  .multiplayer-section {
+    text-align: center;
+    margin: 15px 0;
+  }
+
+  .multiplayer-section h3 {
+    font-family: 'MightySouly', sans-serif;
+    color: #2C3E50; /* deep blue-gray contrast */
+    margin: 10px 0;
+    font-size: 1.2em;
+    letter-spacing: 1px;
+  }
+
+  .feedback-success {
+    color: #16a34a !important;
+    background: #dcfce7;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 4px solid #16a34a;
+  }
+
+  .feedback-error {
+    color: #dc2626 !important;
+    background: #fef2f2;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 4px solid #dc2626;
+  }
+
+  .feedback-info {
+    color: #2563eb !important;
+    background: #eff6ff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 4px solid #2563eb;
+  }
+
+  /* Input styling for multiplayer forms */
+  .multiplayer-input {
+    padding: 18px 24px;
+    font-size: 20px;
+    border: 3px solid #E67E22; /* warm muted orange */
+    border-radius: 12px;
+    transition: border-color 0.2s ease;
+    min-height: 25px;
+  }
+
+  .multiplayer-input:focus {
+    outline: none;
+    border-color: #2C3E50; /* deep blue-gray contrast */
+    box-shadow: 0 0 0 4px rgba(44, 62, 80, 0.1);
+    transform: scale(1.02);
+  }
+
+  /* Animations */
+  .player-item {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .room-code-display {
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    #main-title {
+      font-size: 2.8em;
+      letter-spacing: 2px;
+    }
+    
+    .multiplayer-title {
+      font-size: 1.5em;
+    }
+    
+    .room-code-display {
+      font-size: 1.2em;
+      letter-spacing: 2px;
+    }
+    
+    #lobby-screen {
+      width: 95%;
+      padding: 30px 25px;
+    }
+    
+    #game-screen,
+    #question-form-screen,
+    #create-room-screen,
+    #join-room-screen {
+      width: 95%;
+      padding: 30px 25px;
+    }
+    
+    #question-display img,
+    .image-container {
+      max-width: 95vw;
+      max-height: 60vh;
+    }
+    
+    .image-container {
+      margin: 15px auto;
+    }
+    
+    button {
+      min-width: 150px;
+      font-size: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    #main-title {
+      font-size: 2.2em;
+      margin-top: 20px;
+    }
+    
+    #question-display img,
+    .image-container {
+      max-width: 95vw;
+      max-height: 50vh;
+    }
+    
+    .image-container {
+      margin: 10px auto;
+    }
+    
+    #timer-display {
+      font-size: 24px;
+      padding: 10px 15px;
+    }
+    
+    input#user-answer {
+      font-size: 18px;
+      padding: 15px 20px;
+    }
+  }
 </style>
   <meta charset="UTF-8" />
   <title>Hipster Trivia</title>
@@ -131,21 +472,28 @@
   <h1 id="main-title">Hipster Trivia</h1>
 
 <div id="home-screen">
-  <button id="start-game-btn">Start Solo Game</button>
-  <hr style="width: 100%; border: 1px solid #ddd; margin: 20px 0;">
-  <h3 style="text-align: center; margin: 10px 0; color: #666;">Multiplayer</h3>
-  <button id="create-room-btn">Create Room</button>
-  <button id="join-room-btn">Join Room</button>
-  <hr style="width: 100%; border: 1px solid #ddd; margin: 20px 0;">
-  <button id="add-question-btn">Add Question</button>
-  <button id="admin-view-btn" style="display:none;">Admin:Browse Questions</button>
+  <button id="start-game-btn">🎯 Start Solo Game</button>
+  
+  <hr class="section-divider">
+  
+  <div class="multiplayer-section">
+    <h3>Multiplayer</h3>
+    <button id="create-room-btn">🏠 Create Room</button>
+    <button id="join-room-btn">🚪 Join Room</button>
+  </div>
+  
+  <hr class="section-divider">
+  
+  <button id="add-question-btn">➕ Add Question</button>
+  <button id="admin-view-btn" style="display:none;">🔧 Admin: Browse Questions</button>
 </div>
 
 <div id="game-screen" style="display: none;">
   <div id="timer-display" style="font-size: 24px; font-weight: bold; text-align: center; color: #F08787; margin-bottom: 10px;">Time: 10</div>
   <div id="question-display"></div>
-  <input type="text" id="user-answer" placeholder="what you thinking" />
-  <!-- Submit button removed to prevent spam -->
+  <div style="display: flex; justify-content: flex-start; align-items: stretch; width: 100%;">
+    <input type="text" id="user-answer" placeholder="type your answer here..." />
+  </div>
   <p id="feedback"></p>
 </div>
 
@@ -186,44 +534,57 @@
 
 <!-- Multiplayer Screens -->
 <div id="create-room-screen" style="display:none;">
-  <h2>Create Multiplayer Room</h2>
+  <h2 class="multiplayer-title">Create Multiplayer Room</h2>
   <label>
     Your Name: <br />
-    <input id="host-name-input" placeholder="Enter your name" maxlength="20" />
+    <input id="host-name-input" class="multiplayer-input" placeholder="Enter your name" maxlength="20" />
   </label><br />
   <button id="create-room-submit">Create Room</button>
   <button id="create-room-back">Back</button>
 </div>
 
 <div id="join-room-screen" style="display:none;">
-  <h2>Join Multiplayer Room</h2>
+  <h2 class="multiplayer-title">Join Multiplayer Room</h2>
   <label>
     Your Name: <br />
-    <input id="player-name-input" placeholder="Enter your name" maxlength="20" />
+    <input id="player-name-input" class="multiplayer-input" placeholder="Enter your name" maxlength="20" />
   </label><br />
   <label>
     Room Code: <br />
-    <input id="room-code-input" placeholder="Enter 6-character code" maxlength="6" style="text-transform: uppercase;" />
+    <input id="room-code-input" class="multiplayer-input" placeholder="Enter 6-character code" maxlength="6" style="text-transform: uppercase; text-align: center; font-family: 'Courier New', monospace; font-weight: bold;" />
   </label><br />
   <button id="join-room-submit">Join Room</button>
   <button id="join-room-back">Back</button>
 </div>
 
 <div id="lobby-screen" style="display:none;">
-  <h2>Game Lobby</h2>
-  <div id="room-info">
-    <h3>Room Code: <span id="room-code-display" style="font-family: monospace; background: #e2e8f0; padding: 4px 8px; border-radius: 4px;"></span></h3>
-    <p>Share this code with friends to join!</p>
+  <h1 class="multiplayer-title">Game Lobby</h1>
+  
+  <div id="room-info" class="multiplayer-section">
+    <h3>Room Code</h3>
+    <div id="room-code-display" class="room-code-display"></div>
+    <p style="color: #666; font-style: italic;">Share this code with friends to join!</p>
   </div>
-  <div id="players-section">
-    <h4>Players (<span id="player-count">0</span>):</h4>
-    <div id="player-list"></div>
+
+  <hr class="section-divider">
+  
+  <div id="players-section" class="multiplayer-section">
+    <h3>Players (<span id="player-count">0</span>)</h3>
+    <div id="player-list">
+      <div style="color: #666; font-style: italic; text-align: center; padding: 20px;">
+        Waiting for players to join...
+      </div>
+    </div>
   </div>
-  <div id="lobby-controls">
-    <button id="start-multiplayer-game" style="display:none;">Start Game</button>
+
+  <hr class="section-divider">
+
+  <div id="lobby-controls" style="text-align: center;">
+    <button id="start-multiplayer-game" style="display:none; font-size: 18px; padding: 15px 30px;">🎮 Start Game</button>
     <button id="leave-room">Leave Room</button>
   </div>
-  <div id="lobby-feedback"></div>
+  
+  <div id="lobby-feedback" style="margin-top: 20px; text-align: center;"></div>
 </div>
 
 <script src="js/views/View.js"></script>

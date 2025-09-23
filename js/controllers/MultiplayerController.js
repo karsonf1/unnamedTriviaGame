@@ -78,12 +78,12 @@ const MultiplayerController = (() => {
     if (feedback) {
       feedback.textContent = message;
       feedback.className = `feedback-${type}`;
-      feedback.style.color = type === 'error' ? '#dc2626' : type === 'success' ? '#16a34a' : '#6b7280';
       
-      // Clear after 3 seconds
+      // Clear after 4 seconds
       setTimeout(() => {
         feedback.textContent = '';
-      }, 3000);
+        feedback.className = '';
+      }, 4000);
     }
   };
 
@@ -94,11 +94,20 @@ const MultiplayerController = (() => {
     const startButton = document.getElementById('start-multiplayer-game');
 
     if (playerList) {
-      playerList.innerHTML = players.map(player => 
-        `<div style="padding: 8px; background: ${player.isHost ? '#fef3c7' : '#f3f4f6'}; border-radius: 6px; margin: 4px 0;">
-          ${player.name} ${player.isHost ? '(Host)' : ''}
-        </div>`
-      ).join('');
+      if (players.length === 0) {
+        playerList.innerHTML = `
+          <div style="color: #666; font-style: italic; text-align: center; padding: 20px;">
+            Waiting for players to join...
+          </div>
+        `;
+      } else {
+        playerList.innerHTML = players.map(player => 
+          `<div class="player-item ${player.isHost ? 'host' : ''}">
+            <span class="player-name">${player.name}</span>
+            ${player.isHost ? '<span class="host-badge">👑 Host</span>' : ''}
+          </div>`
+        ).join('');
+      }
     }
 
     if (playerCount) {
@@ -124,7 +133,14 @@ const MultiplayerController = (() => {
   const createRoom = () => {
     const hostName = document.getElementById('host-name-input').value.trim();
     if (!hostName) {
-      alert('Please enter your name!');
+      // Add visual feedback to the create room screen
+      const hostNameInput = document.getElementById('host-name-input');
+      hostNameInput.style.borderColor = '#dc2626';
+      hostNameInput.placeholder = 'Please enter your name!';
+      setTimeout(() => {
+        hostNameInput.style.borderColor = '';
+        hostNameInput.placeholder = 'Enter your name';
+      }, 3000);
       return;
     }
 
@@ -141,12 +157,24 @@ const MultiplayerController = (() => {
     const roomCode = document.getElementById('room-code-input').value.trim().toUpperCase();
 
     if (!playerName) {
-      alert('Please enter your name!');
+      const playerNameInput = document.getElementById('player-name-input');
+      playerNameInput.style.borderColor = '#dc2626';
+      playerNameInput.placeholder = 'Please enter your name!';
+      setTimeout(() => {
+        playerNameInput.style.borderColor = '';
+        playerNameInput.placeholder = 'Enter your name';
+      }, 3000);
       return;
     }
 
     if (!roomCode || roomCode.length !== 6) {
-      alert('Please enter a valid 6-character room code!');
+      const roomCodeInput = document.getElementById('room-code-input');
+      roomCodeInput.style.borderColor = '#dc2626';
+      roomCodeInput.placeholder = 'NEED 6 CHARS!';
+      setTimeout(() => {
+        roomCodeInput.style.borderColor = '';
+        roomCodeInput.placeholder = 'Enter 6-character code';
+      }, 3000);
       return;
     }
 

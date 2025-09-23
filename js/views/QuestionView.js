@@ -13,7 +13,11 @@ const QuestionView = (() => {
 
     if (questionObj.imageOrText) {
       if (/^https?:\/\//.test(questionObj.imageOrText)) {
-        html += `<img src="${questionObj.imageOrText}" alt="Question Image" style="max-width:300px;" />`;
+        html += `
+          <div class="image-container">
+            <img src="${questionObj.imageOrText}" alt="Question Image" />
+          </div>
+        `;
       } else {
         html += `<p>${questionObj.imageOrText}</p>`;
       }
@@ -24,7 +28,7 @@ const QuestionView = (() => {
     // Reset timer display
     if (timerDisplay) {
       timerDisplay.textContent = "Time: 10";
-      timerDisplay.style.color = "#F08787";
+      timerDisplay.style.color = "#B23A48"; /* accent color */
     }
   };
 
@@ -38,7 +42,7 @@ const QuestionView = (() => {
       } else if (seconds <= 5) {
         timerDisplay.style.color = "#ea580c"; // orange
       } else {
-        timerDisplay.style.color = "#F08787"; // default
+        timerDisplay.style.color = "#B23A48"; // accent color default
       }
     }
   };
