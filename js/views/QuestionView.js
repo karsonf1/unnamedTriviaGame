@@ -60,7 +60,7 @@ const QuestionView = (() => {
     
     // Replace the image/text with the correct answer display
     html += `
-      <div style="background: #4ade80; color: white; padding: 20px; border-radius: 12px; text-align: center; font-size: 24px; font-weight: bold; margin: 20px 0;">
+      <div style="background: #4ade80; font-family: 'Times New Roman', sans-serif; color: white; padding: 20px; border-radius: 12px; text-align: center; font-size: 24px; font-weight: normal; margin: 20px 0;">
         ${capitalizedAnswer}
       </div>
     `;

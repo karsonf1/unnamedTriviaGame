@@ -1,0 +1,464 @@
+/* Main styles using the global color palette */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-main);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: right;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+#main-title {
+  font-family: 'MightySouly', sans-serif;
+  font-size: 3.5em;
+  font-weight: normal;
+  color: var(--primary-orange);
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 25px;
+  width: 100vw;
+  letter-spacing: 3px;
+  display: block;
+  text-shadow: 2px 2px 4px var(--shadow-light);
+}
+
+#home-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-yellow);
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px var(--shadow-medium);
+  width: 90%;
+  max-width: 700px;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#admin-screen {
+  background-color: var(--primary-yellow);
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px var(--shadow-medium);
+  width: 95%;
+  max-width: 1200px;
+  margin: 30px auto;
+  position: relative;
+}
+
+#game-screen,
+#question-form-screen,
+#create-room-screen,
+#join-room-screen {
+  background-color: var(--primary-yellow);
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px var(--shadow-medium);
+  width: 90%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#lobby-screen {
+  background-color: var(--primary-yellow);
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px var(--shadow-medium);
+  width: 90%;
+  max-width: 900px;
+  margin: 30px auto;
+  position: relative;
+  top: 30px;
+}
+
+button {
+  padding: 15px 30px;
+  background-color: var(--primary-orange);
+  color: var(--text-light);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: 'MightySouly', sans-serif;
+  font-weight: normal;
+  font-size: 18px;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+button:hover {
+  background-color: var(--hover-color);
+  color: var(--text-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px var(--shadow-hover);
+}
+
+textarea,
+input {
+  width: 100%;
+  padding: 15px 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+
+input#user-answer {
+  transition: border-color 0.2s ease;
+  text-align: center;
+  font-size: 22px;
+  font-family: 'MightySouly', sans-serif;
+  color: var(--primary-blue-gray);
+  background-color: var(--bg-surface);
+  border: 3px solid var(--border-color);
+  padding: 20px 25px;
+  border-radius: 15px;
+  min-height: 60px;
+}
+
+input#user-answer:focus {
+  outline: none;
+  border-color: var(--focus-color);
+  box-shadow: 0 0 0 4px var(--shadow-focus);
+  background-color: var(--bg-surface-accent);
+  transform: scale(1.02);
+}
+
+input#user-answer::placeholder {
+  color: var(--primary-orange);
+  opacity: 0.7;
+  text-align: center;
+}
+
+label {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+#feedback {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  color: var(--text-primary);
+}
+
+/* Question display styling */
+#question-display {
+  text-align: center;
+  font-family: 'MightySouly', sans-serif;
+  color: var(--primary-blue-gray);
+  font-size: 22px;
+  line-height: 1.4;
+  margin: 30px 0;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#question-display p {
+  margin: 15px 0;
+}
+
+#question-display strong {
+  color: var(--primary-blue-gray);
+  font-size: 26px;
+  display: block;
+  margin-bottom: 20px;
+}
+
+#question-display img {
+  display: block;
+  margin: 25px auto;
+  border-radius: 15px;
+  max-width: 90vw;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  border-radius: 15px;
+}
+
+/* Dynamic image container for better scaling */
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 25px auto;
+  max-width: 90vw;
+  max-height: 70vh;
+  min-width: 200px;
+  min-height: 150px;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px var(--shadow-heavy);
+  background: transparent;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 15px;
+  margin: 0;
+  box-shadow: none;
+  display: block;
+}
+
+/* Timer display styling */
+#timer-display {
+  font-family: 'MightySouly', sans-serif;
+  font-size: 32px;
+  font-weight: normal;
+  text-align: center;
+  color: var(--primary-blue-gray);
+  margin-bottom: 25px;
+  letter-spacing: 2px;
+  background: var(--gradient-surface);
+  padding: 15px 25px;
+  border-radius: 15px;
+  border: 2px solid var(--border-color);
+  display: inline-block;
+  min-width: 150px;
+}
+
+/* Multiplayer specific styling */
+.multiplayer-title {
+  font-family: 'MightySouly', sans-serif;
+  font-size: 1.8em;
+  color: var(--primary-blue-gray);
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.room-code-display {
+  font-family: 'Courier New', monospace;
+  font-size: 1.5em;
+  font-weight: bold;
+  background: var(--primary-orange);
+  color: var(--text-light);
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-align: center;
+  letter-spacing: 3px;
+  border: 2px solid var(--primary-blue-gray);
+  margin: 10px 0;
+}
+
+.player-item {
+  background: var(--bg-surface);
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 6px 0;
+  box-shadow: 0 2px 4px var(--shadow-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.player-item.host {
+  background: var(--primary-orange);
+  border: 2px solid var(--primary-blue-gray);
+  color: var(--text-light);
+}
+
+.player-name {
+  font-weight: bold;
+  color: var(--text-secondary);
+}
+
+.host-badge {
+  background: var(--primary-blue-gray);
+  color: var(--text-light);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.section-divider {
+  width: 100%;
+  height: 2px;
+  background: var(--gradient-divider);
+  margin: 20px 0;
+  border: none;
+}
+
+.multiplayer-section {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.multiplayer-section h3 {
+  font-family: 'MightySouly', sans-serif;
+  color: var(--primary-blue-gray);
+  margin: 10px 0;
+  font-size: 1.2em;
+  letter-spacing: 1px;
+}
+
+.feedback-success {
+  color: var(--success-color) !important;
+  background: var(--success-bg);
+  padding: 8px 12px;
+  border-radius: 6px;
+  border-left: 4px solid var(--success-color);
+}
+
+.feedback-error {
+  color: var(--error-color) !important;
+  background: var(--error-bg);
+  padding: 8px 12px;
+  border-radius: 6px;
+  border-left: 4px solid var(--error-color);
+}
+
+.feedback-info {
+  color: var(--info-color) !important;
+  background: var(--info-bg);
+  padding: 8px 12px;
+  border-radius: 6px;
+  border-left: 4px solid var(--info-color);
+}
+
+/* Input styling for multiplayer forms */
+.multiplayer-input {
+  padding: 18px 24px;
+  font-size: 20px;
+  border: 3px solid var(--border-color);
+  border-radius: 12px;
+  transition: border-color 0.2s ease;
+  min-height: 25px;
+}
+
+.multiplayer-input:focus {
+  outline: none;
+  border-color: var(--focus-color);
+  box-shadow: 0 0 0 4px rgba(44, 62, 80, 0.1);
+  transform: scale(1.02);
+}
+
+/* Animations */
+.player-item {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.room-code-display {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #main-title {
+    font-size: 2.8em;
+    letter-spacing: 2px;
+  }
+  
+  .multiplayer-title {
+    font-size: 1.5em;
+  }
+  
+  .room-code-display {
+    font-size: 1.2em;
+    letter-spacing: 2px;
+  }
+  
+  #lobby-screen {
+    width: 95%;
+    padding: 30px 25px;
+  }
+  
+  #game-screen,
+  #question-form-screen,
+  #create-room-screen,
+  #join-room-screen {
+    width: 95%;
+    padding: 30px 25px;
+  }
+  
+  #question-display img,
+  .image-container {
+    max-width: 95vw;
+    max-height: 60vh;
+  }
+  
+  .image-container {
+    margin: 15px auto;
+  }
+  
+  button {
+    min-width: 150px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  #main-title {
+    font-size: 2.2em;
+    margin-top: 20px;
+  }
+  
+  #question-display img,
+  .image-container {
+    max-width: 95vw;
+    max-height: 50vh;
+  }
+  
+  .image-container {
+    margin: 10px auto;
+  }
+  
+  #timer-display {
+    font-size: 24px;
+    padding: 10px 15px;
+  }
+  
+  input#user-answer {
+    font-size: 18px;
+    padding: 15px 20px;
+  }
+}

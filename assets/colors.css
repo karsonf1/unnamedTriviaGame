@@ -1,0 +1,95 @@
+/* =================================
+   GLOBAL COLOR PALETTE
+   ================================= */
+
+:root {
+  /* Primary Colors - Under the Sea Theme */
+  --primary-orange: #FF6B35;        /* vibrant coral/orange fish */
+  --primary-yellow: #20B2AA;        /* light sea green/turquoise */
+  --primary-blue-gray: #003f5c;     /* deep ocean blue */
+  
+  /* Background Colors */
+  --bg-main: #E0F6FF;               /* light ocean blue background */
+  --bg-surface: #F0FFFE;            /* sea foam white for cards/inputs */
+  --bg-surface-accent: #E6FFFA;     /* mint seafoam for focus states */
+  
+  /* Text Colors */
+  --text-primary: #001a2e;          /* deep ocean navy for main text */
+  --text-secondary: #2c5f2d;        /* seaweed green for secondary text */
+  --text-muted: #4a90a4;            /* muted blue-green for hints */
+  --text-light: #F0FFFE;            /* sea foam white for dark backgrounds */
+  
+  /* Interactive Colors */
+  --hover-color: #1e3a8a;           /* deeper blue for hover states */
+  --focus-color: #0ea5e9;           /* bright ocean blue for focus */
+  --border-color: #FF6B35;          /* coral for borders */
+  
+  /* Feedback Colors */
+  --success-color: #059669;         /* sea green for success */
+  --success-bg: #d1fae5;            /* light sea green background */
+  --error-color: #dc2626;
+  --error-bg: #fef2f2;
+  --info-color: #0284c7;            /* ocean blue for info */
+  --info-bg: #e0f2fe;               /* light ocean blue background */
+  
+  /* Shadow and Effects */
+  --shadow-light: rgba(0, 63, 92, 0.1);     /* soft ocean shadow */
+  --shadow-medium: rgba(0, 63, 92, 0.15);   /* medium ocean shadow */
+  --shadow-heavy: rgba(0, 63, 92, 0.2);     /* deep ocean shadow */
+  --shadow-focus: rgba(14, 165, 233, 0.3);  /* bright ocean blue focus */
+  --shadow-hover: rgba(30, 58, 138, 0.3);   /* deep blue hover shadow */
+  
+  /* Gradients */
+  --gradient-divider: linear-gradient(90deg, transparent, #FF6B35, transparent); /* coral gradient */
+  --gradient-surface: rgba(32, 178, 170, 0.2); /* translucent sea green */
+}
+
+/* =================================
+   ALTERNATIVE COLOR THEMES
+   ================================= */
+
+/* Uncomment one of these themes to quickly change your site's appearance */
+
+/* Cool Blue Theme */
+/*
+:root {
+  --primary-orange: #3B82F6;
+  --primary-yellow: #60A5FA;
+  --primary-blue-gray: #1E293B;
+  --bg-main: #F1F5F9;
+}
+*/
+
+/* Forest Green Theme */
+/*
+:root {
+  --primary-orange: #10B981;
+  --primary-yellow: #34D399;
+  --primary-blue-gray: #064E3B;
+  --bg-main: #ECFDF5;
+}
+*/
+
+/* Purple Theme */
+/*
+:root {
+  --primary-orange: #8B5CF6;
+  --primary-yellow: #A78BFA;
+  --primary-blue-gray: #4C1D95;
+  --bg-main: #FAF5FF;
+}
+*/
+
+/* Dark Mode Theme */
+/*
+:root {
+  --primary-orange: #F59E0B;
+  --primary-yellow: #FCD34D;
+  --primary-blue-gray: #111827;
+  --bg-main: #1F2937;
+  --bg-surface: #374151;
+  --text-primary: #F9FAFB;
+  --text-secondary: #E5E7EB;
+  --text-light: #111827;
+}
+*/
