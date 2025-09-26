@@ -14,6 +14,7 @@
 
 <div id="home-screen">
   <button id="start-game-btn">🎯 Start Solo Game</button>
+  <button id="game-settings-btn">⚙️ Game Settings</button>
   
   <hr class="section-divider">
   
@@ -35,7 +36,6 @@
   <div style="display: flex; justify-content: flex-start; align-items: stretch; width: 100%;">
     <input type="text" id="user-answer" placeholder="type your answer here..." />
   </div>
-  <p id="feedback"></p>
 </div>
 
 <div id="question-form-screen" style="display: none;">
@@ -71,6 +71,33 @@
   <div id="tag-list"></div>
   <div id="all-questions-list"></div>
   <button id="admin-back-btn">Back</button>
+</div>
+
+<!-- Game Settings Screen -->
+<div id="game-settings-screen" style="display:none;">
+  <h2>Game Settings</h2>
+  <div class="settings-section">
+    <h3>Category Filter</h3>
+    <p style="color: #666; margin-bottom: 15px;">Select which categories to include in your game. Unselected categories will be excluded.</p>
+    
+    <div id="category-filter-controls" style="margin-bottom: 20px;">
+      <button id="select-all-categories" style="background: #27ae60; margin-right: 10px;">✓ Select All</button>
+      <button id="deselect-all-categories" style="background: #e74c3c;">✗ Clear All</button>
+    </div>
+    
+    <div id="category-checkboxes" class="category-grid">
+      <!-- Categories will be dynamically populated here -->
+    </div>
+    
+    <div id="filter-summary" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #E67E22;">
+      <strong>Questions Available: <span id="question-count">0</span></strong>
+    </div>
+  </div>
+  
+  <div style="display: flex; gap: 10px; margin-top: 30px;">
+    <button id="start-filtered-game" style="background-color: #27ae60; font-size: 16px; padding: 12px 20px;">🎯 Start Game</button>
+    <button id="settings-back-btn">Cancel</button>
+  </div>
 </div>
 
 <!-- Question Editor Screen -->
@@ -159,8 +186,6 @@
     <button id="start-multiplayer-game" style="display:none; font-size: 18px; padding: 15px 30px;">🎮 Start Game</button>
     <button id="leave-room">Leave Room</button>
   </div>
-  
-  <div id="lobby-feedback" style="margin-top: 20px; text-align: center;"></div>
 </div>
 
 <script src="js/views/View.js"></script>
@@ -168,6 +193,7 @@
 <script src="js/views/QuestionEditor.js"></script>
 <script src="js/views/QuestionListView.js"></script>
 <script src="js/views/PokemonQuestionView.js"></script>
+<script src="js/views/GameSettingsView.js"></script>
 
 <script src="js/models/Model.js"></script>
 <script src="js/models/DefaultCategories.js"></script>

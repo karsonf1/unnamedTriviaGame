@@ -9,6 +9,7 @@ const GameController = (() => {
   const form = document.getElementById("submit-question-form");
   const editForm = document.getElementById("edit-question-form");
   const startGameBtn = document.getElementById("start-game-btn");
+  const gameSettingsBtn = document.getElementById("game-settings-btn");
   const addQuestionBtn = document.getElementById("add-question-btn");
   const answerBtn = document.getElementById("submit-answer-btn");
   const adminBtn = document.getElementById("admin-view-btn");
@@ -46,21 +47,19 @@ const GameController = (() => {
 
   const handleTimeOut = () => {
     QuestionView.showCorrectAnswer(currentQuestion);
-    View.showFeedback("⏰ Time's up!");
     setTimeout(() => {
       nextQuestion();
     }, 3000); // Extended to 3 seconds to read the answer
   };
 
   const nextQuestion = () => {
-    currentQuestion = Model.getRandomQuestion();
+    currentQuestion = getRandomQuestionFromCurrentSet();
     isAnswerSubmitted = false; // Reset the submission flag
     if (currentQuestion) {
       View.renderQuestion(currentQuestion);
       clearAnswerInput();
       startTimer();
     } else {
-      View.showFeedback("No more questions available!");
       stopTimer();
     }
   };
@@ -82,6 +81,42 @@ const GameController = (() => {
     QuestionView.showTimer();
     clearAnswerInput();
     startTimer();
+  };
+
+  const startGameWithFilters = (filters) => {
+    // Get filtered questions
+    const filteredQuestions = Model.getQuestionsByTags(filters.includeTags || [], filters.excludeTags || []);
+    
+    if (filteredQuestions.length === 0) {
+      alert('No questions available with the selected filters!');
+      return;
+    }
+
+    // Store filtered questions for the game session
+    window.currentGameQuestions = filteredQuestions;
+    
+    // Get a random question from the filtered set
+    const randomIndex = Math.floor(Math.random() * filteredQuestions.length);
+    currentQuestion = filteredQuestions[randomIndex];
+    
+    isAnswerSubmitted = false; // Reset submission flag
+    View.renderQuestion(currentQuestion);
+    switchScreen("game");
+    QuestionView.showTimer();
+    clearAnswerInput();
+    startTimer();
+  };
+
+  const getRandomQuestionFromCurrentSet = () => {
+    // If we have a filtered set, use it; otherwise use all questions
+    const questionsToUse = window.currentGameQuestions || Model.getQuestions();
+    
+    if (questionsToUse.length === 0) {
+      return null;
+    }
+    
+    const randomIndex = Math.floor(Math.random() * questionsToUse.length);
+    return questionsToUse[randomIndex];
   };
 
   const checkAnswerRealTime = (userInput) => {
@@ -119,13 +154,11 @@ const GameController = (() => {
 
     if (currentQuestion.acceptableAnswers.includes(userInput)) {
       QuestionView.showCorrectAnswer(currentQuestion);
-      View.showFeedback("✅ Correct!");
       setTimeout(() => {
         nextQuestion();
       }, 3000); // Extended to 3 seconds to read the answer
     } else {
       QuestionView.showCorrectAnswer(currentQuestion);
-      View.showFeedback("❌ Incorrect!");
       setTimeout(() => {
         nextQuestion();
       }, 3000); // Extended to 3 seconds to read the answer
@@ -357,6 +390,11 @@ const GameController = (() => {
     // Model.load() is now called automatically when Model.js loads
 
     startGameBtn.addEventListener("click", startGame);
+    gameSettingsBtn.addEventListener("click", () => {
+      stopTimer(); // Stop timer when going to settings
+      QuestionView.hideTimer();
+      GameSettingsView.showSettingsScreen();
+    });
     addQuestionBtn.addEventListener("click", () => {
       stopTimer(); // Stop timer when leaving game
       QuestionView.hideTimer();
@@ -411,7 +449,7 @@ const GameController = (() => {
     }
   };
 
-  return { init, editQuestion };
+  return { init, editQuestion, startGameWithFilters };
 })();
 
 // Make GameController globally accessible

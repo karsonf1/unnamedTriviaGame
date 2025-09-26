@@ -8,6 +8,7 @@ const View = (() => {
     "create-room": document.getElementById("create-room-screen"),
     "join-room": document.getElementById("join-room-screen"),
     lobby: document.getElementById("lobby-screen"),
+    "game-settings-screen": document.getElementById("game-settings-screen")
   };
 
   const showScreen = (screenName) => {
@@ -16,9 +17,6 @@ const View = (() => {
       // For admin and edit-question, use block to allow grid layouts
       screens[screenName].style.display = (screenName === "admin" || screenName === "edit-question") ? "block" : "flex";
     }
-    // Optionally clear feedback when switching screens
-    const feedback = document.getElementById("feedback");
-    if (feedback) feedback.textContent = "";
   };
 
   const renderQuestion = (questionObj) => {
@@ -27,16 +25,13 @@ const View = (() => {
     }
   };
 
-  const showFeedback = (msg) => {
-    const feedback = document.getElementById("feedback");
-    if (feedback) feedback.textContent = msg;
-  };
+
 
   const renderTags = (tags) => {
     const tagList = document.getElementById("tag-list");
     tagList.innerHTML = tags.map(tag => `<button class="tag-btn" data-tag="${tag}">${tag}</button>`).join(" ");
   };
 
-  return { showScreen, renderQuestion, showFeedback, renderTags };
+  return { showScreen, renderQuestion, renderTags };
 })();
 window.View = View;

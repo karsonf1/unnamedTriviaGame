@@ -280,6 +280,71 @@ label {
   justify-content: space-between;
 }
 
+/* Game Settings Screen Styling */
+.settings-section {
+  background: var(--bg-surface);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+  box-shadow: 0 4px 12px var(--shadow-light);
+}
+
+.settings-section h3 {
+  font-family: 'MightySouly', sans-serif;
+  color: var(--primary-blue-gray);
+  margin-bottom: 10px;
+  font-size: 1.3em;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 15px 0;
+}
+
+.category-checkbox-item {
+  display: flex;
+  align-items: center;
+  background: var(--bg-main);
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.category-checkbox-item:hover {
+  background: var(--primary-orange-light);
+  border-color: var(--primary-orange);
+}
+
+.category-checkbox-item.selected {
+  background: var(--primary-orange-light);
+  border-color: var(--primary-orange);
+  color: var(--primary-blue-gray);
+}
+
+.category-checkbox {
+  margin-right: 8px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.category-label {
+  font-family: 'MightySouly', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  text-transform: capitalize;
+  flex-grow: 1;
+}
+
+.category-question-count {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-left: 8px;
+}
+
 .player-item.host {
   background: var(--primary-orange);
   border: 2px solid var(--primary-blue-gray);
@@ -321,29 +386,6 @@ label {
   letter-spacing: 1px;
 }
 
-.feedback-success {
-  color: var(--success-color) !important;
-  background: var(--success-bg);
-  padding: 8px 12px;
-  border-radius: 6px;
-  border-left: 4px solid var(--success-color);
-}
-
-.feedback-error {
-  color: var(--error-color) !important;
-  background: var(--error-bg);
-  padding: 8px 12px;
-  border-radius: 6px;
-  border-left: 4px solid var(--error-color);
-}
-
-.feedback-info {
-  color: var(--info-color) !important;
-  background: var(--info-bg);
-  padding: 8px 12px;
-  border-radius: 6px;
-  border-left: 4px solid var(--info-color);
-}
 
 /* Input styling for multiplayer forms */
 .multiplayer-input {

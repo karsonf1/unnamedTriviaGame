@@ -85,6 +85,30 @@ const Model = (() => {
     return Array.from(tagSet);
   }
 
+  const getQuestionsByTags = (includeTags = [], excludeTags = []) => {
+    if (includeTags.length === 0 && excludeTags.length === 0) {
+      return questions;
+    }
+    
+    return questions.filter(q => {
+      const questionTags = q.tags || [];
+      
+      // If exclude tags are specified, make sure question doesn't have any of them
+      if (excludeTags.length > 0) {
+        const hasExcludedTag = excludeTags.some(tag => questionTags.includes(tag));
+        if (hasExcludedTag) return false;
+      }
+      
+      // If include tags are specified, make sure question has at least one of them
+      if (includeTags.length > 0) {
+        const hasIncludedTag = includeTags.some(tag => questionTags.includes(tag));
+        if (!hasIncludedTag) return false;
+      }
+      
+      return true;
+    });
+  }
+
   // Debug function to check localStorage
   const debugStorage = () => {
     const data = localStorage.getItem("hipsterTriviaQuestions");
@@ -108,7 +132,7 @@ const Model = (() => {
     console.log('=== END DEBUG ===');
   };
 
-  return { load, save, addQuestion, updateQuestion, deleteQuestion, getQuestionByIndex, getRandomQuestion, getQuestions, getAllTags, debugStorage };
+  return { load, save, addQuestion, updateQuestion, deleteQuestion, getQuestionByIndex, getRandomQuestion, getQuestions, getAllTags, getQuestionsByTags, debugStorage };
 })();
 window.Model = Model;
 
