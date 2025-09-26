@@ -73,6 +73,41 @@
   <button id="admin-back-btn">Back</button>
 </div>
 
+<!-- Question Editor Screen -->
+<div id="edit-question-screen" style="display:none;">
+  <h2>Edit Question</h2>
+  <form id="edit-question-form">
+    <label>
+      Question: <br />
+      <textarea id="edit-question-text" rows="3" required></textarea>
+    </label><br />
+    <label>
+      Acceptable answers (comma-separated): <br />
+      <textarea id="edit-acceptable-answers" rows="2" required></textarea>
+    </label><br />
+    <label>
+      Image URL or additional text (optional): <br />
+      <input type="text" id="edit-image-or-text" />
+    </label><br />
+    <label>
+      Tags (comma-separated, max 3): <br />
+      <input type="text" id="edit-tags-input" placeholder="e.g. pokemon, geography, science" />
+    </label><br />
+    
+    <!-- Question Preview Section -->
+    <div id="question-preview" style="margin: 20px 0; padding: 20px; background: #f5f5f5; border-radius: 10px;">
+      <h3>Preview:</h3>
+      <div id="preview-content"></div>
+    </div>
+    
+    <div style="display: flex; gap: 10px; margin-top: 20px;">
+      <button type="submit" style="background-color: #E67E22;">Save Changes</button>
+      <button type="button" id="delete-question-btn" style="background-color: #e74c3c;">Delete Question</button>
+      <button type="button" id="edit-back-btn">Cancel</button>
+    </div>
+  </form>
+</div>
+
 <!-- Multiplayer Screens -->
 <div id="create-room-screen" style="display:none;">
   <h2 class="multiplayer-title">Create Multiplayer Room</h2>
@@ -130,6 +165,7 @@
 
 <script src="js/views/View.js"></script>
 <script src="js/views/QuestionView.js"></script>
+<script src="js/views/QuestionEditor.js"></script>
 <script src="js/views/QuestionListView.js"></script>
 <script src="js/views/PokemonQuestionView.js"></script>
 

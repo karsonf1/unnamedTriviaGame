@@ -7,11 +7,17 @@ const GameController = (() => {
 
   // cache DOM elements used by multiple views
   const form = document.getElementById("submit-question-form");
+  const editForm = document.getElementById("edit-question-form");
   const startGameBtn = document.getElementById("start-game-btn");
   const addQuestionBtn = document.getElementById("add-question-btn");
   const answerBtn = document.getElementById("submit-answer-btn");
   const adminBtn = document.getElementById("admin-view-btn");
   const adminBackBtn = document.getElementById("admin-back-btn");
+  const editBackBtn = document.getElementById("edit-back-btn");
+  const deleteQuestionBtn = document.getElementById("delete-question-btn");
+
+  // Question editing state
+  let currentEditingIndex = -1;
 
   // ------------------ screen switching ------------------
   const switchScreen = (screenName) => {
@@ -191,6 +197,152 @@ const GameController = (() => {
     }
   };
 
+  // ------------------ question editing -----------------
+  const editQuestion = (questionIndex) => {
+    console.log('editQuestion called with index:', questionIndex);
+    currentEditingIndex = questionIndex;
+    const question = Model.getQuestionByIndex(questionIndex);
+    
+    if (!question) {
+      alert('Question not found!');
+      return;
+    }
+
+    // Populate the edit form
+    document.getElementById("edit-question-text").value = question.question || '';
+    document.getElementById("edit-acceptable-answers").value = 
+      Array.isArray(question.acceptableAnswers) ? question.acceptableAnswers.join(', ') : '';
+    document.getElementById("edit-image-or-text").value = question.imageOrText || '';
+    document.getElementById("edit-tags-input").value = 
+      Array.isArray(question.tags) ? question.tags.join(', ') : '';
+
+    // Update preview
+    updateQuestionPreview();
+
+    // Switch to edit screen
+    switchScreen("edit-question");
+  };
+
+  const updateQuestionPreview = () => {
+    const questionText = document.getElementById("edit-question-text").value.trim();
+    const answers = document.getElementById("edit-acceptable-answers").value.trim();
+    const imageOrText = document.getElementById("edit-image-or-text").value.trim();
+    const tags = document.getElementById("edit-tags-input").value.trim();
+
+    const previewContent = document.getElementById("preview-content");
+    
+    let preview = `<div style="text-align: center;">`;
+    
+    if (questionText) {
+      preview += `<div style="font-weight: bold; font-size: 18px; margin-bottom: 15px;">${questionText}</div>`;
+    }
+    
+    if (imageOrText && imageOrText.startsWith('http')) {
+      preview += `<img src="${imageOrText}" alt="Question image" style="max-width: 200px; max-height: 200px; object-fit: contain; border-radius: 8px;" onerror="this.style.display='none'"/>`;
+    } else if (imageOrText) {
+      preview += `<div style="color: #666; font-style: italic; margin: 10px 0;">${imageOrText}</div>`;
+    }
+    
+    if (answers) {
+      preview += `<div style="margin-top: 15px; color: #E67E22; font-weight: bold;">Answer(s): ${answers}</div>`;
+    }
+    
+    if (tags) {
+      const tagArray = tags.split(',').map(t => t.trim()).filter(t => t);
+      preview += `<div style="margin-top: 10px;">`;
+      tagArray.forEach(tag => {
+        preview += `<span style="background: #E67E22; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px; margin: 2px;">${tag}</span>`;
+      });
+      preview += `</div>`;
+    }
+    
+    preview += `</div>`;
+    previewContent.innerHTML = preview;
+  };
+
+  const submitEditQuestion = (e) => {
+    e.preventDefault();
+
+    const questionText = document.getElementById("edit-question-text").value.trim();
+    const answers = document
+      .getElementById("edit-acceptable-answers")
+      .value.trim()
+      .split(",")
+      .map(a => a.trim().toLowerCase());
+    const imageOrText = document.getElementById("edit-image-or-text").value.trim();
+    const tagsInput = document.getElementById("edit-tags-input");
+    
+    // Process tags with validation
+    let tags = [];
+    if (tagsInput && tagsInput.value.trim()) {
+      tags = tagsInput.value.trim()
+        .split(",")
+        .map(t => t.trim().toLowerCase())
+        .filter(t => t) // Remove empty tags
+        .slice(0, 3); // Limit to 3 tags maximum
+    }
+    
+    // Default to "general" if no tags provided
+    if (tags.length === 0) {
+      tags = ["general"];
+    }
+
+    if (!questionText || answers.length === 0) {
+      alert('Question text and at least one answer are required!');
+      return;
+    }
+
+    // Validate tag count
+    if (tags.length > 3) {
+      alert("Maximum of 3 tags allowed. Only the first 3 will be used.");
+      tags = tags.slice(0, 3);
+    }
+
+    const success = Model.updateQuestion(currentEditingIndex, { 
+      question: questionText, 
+      acceptableAnswers: answers, 
+      imageOrText,
+      tags: tags
+    });
+    
+    if (success) {
+      alert(`Question updated successfully with tags: ${tags.join(", ")}`);
+      currentEditingIndex = -1;
+      switchScreen("admin");
+      // Refresh the admin view to show updated question
+      showAdminView();
+    } else {
+      alert('Failed to update question!');
+    }
+  };
+
+  const deleteCurrentQuestion = () => {
+    if (currentEditingIndex === -1) {
+      alert('No question selected for deletion!');
+      return;
+    }
+
+    const question = Model.getQuestionByIndex(currentEditingIndex);
+    if (!question) {
+      alert('Question not found!');
+      return;
+    }
+
+    const confirmDelete = confirm(`Are you sure you want to delete this question?\n\n"${question.question}"`);
+    if (!confirmDelete) return;
+
+    const success = Model.deleteQuestion(currentEditingIndex);
+    if (success) {
+      alert('Question deleted successfully!');
+      currentEditingIndex = -1;
+      switchScreen("admin");
+      // Refresh the admin view
+      showAdminView();
+    } else {
+      alert('Failed to delete question!');
+    }
+  };
+
   // ------------------ keyboard handling ----------------
   const handleKeyPress = (e) => {
     // Prevent Enter key submission to avoid spam
@@ -202,7 +354,7 @@ const GameController = (() => {
 
   // ------------------ initialization -------------------
   const init = () => {
-    Model.load();
+    // Model.load() is now called automatically when Model.js loads
 
     startGameBtn.addEventListener("click", startGame);
     addQuestionBtn.addEventListener("click", () => {
@@ -211,6 +363,30 @@ const GameController = (() => {
       switchScreen("form");
     });
     form.addEventListener("submit", submitNewQuestion);
+    
+    // Edit form listeners
+    if (editForm) {
+      editForm.addEventListener("submit", submitEditQuestion);
+      
+      // Real-time preview updates
+      ["edit-question-text", "edit-acceptable-answers", "edit-image-or-text", "edit-tags-input"].forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.addEventListener("input", updateQuestionPreview);
+        }
+      });
+    }
+
+    if (editBackBtn) {
+      editBackBtn.addEventListener("click", () => {
+        currentEditingIndex = -1;
+        switchScreen("admin");
+      });
+    }
+
+    if (deleteQuestionBtn) {
+      deleteQuestionBtn.addEventListener("click", deleteCurrentQuestion);
+    }
     
     // Remove submit button functionality to prevent spam
     // answerBtn.addEventListener("click", submitAnswer);
@@ -235,8 +411,11 @@ const GameController = (() => {
     }
   };
 
-  return { init };
+  return { init, editQuestion };
 })();
+
+// Make GameController globally accessible
+window.GameController = GameController;
 
 // ------------------ bootstrap -------------------------
 window.onload = () => GameController.init();

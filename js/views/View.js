@@ -4,6 +4,7 @@ const View = (() => {
     game: document.getElementById("game-screen"),
     form: document.getElementById("question-form-screen"),
     admin: document.getElementById("admin-screen"),
+    "edit-question": document.getElementById("edit-question-screen"),
     "create-room": document.getElementById("create-room-screen"),
     "join-room": document.getElementById("join-room-screen"),
     lobby: document.getElementById("lobby-screen"),
@@ -12,8 +13,8 @@ const View = (() => {
   const showScreen = (screenName) => {
     Object.values(screens).forEach(screen => (screen.style.display = "none"));
     if (screens[screenName]) {
-      // For admin, use block to allow grid layouts
-      screens[screenName].style.display = screenName === "admin" ? "block" : "flex";
+      // For admin and edit-question, use block to allow grid layouts
+      screens[screenName].style.display = (screenName === "admin" || screenName === "edit-question") ? "block" : "flex";
     }
     // Optionally clear feedback when switching screens
     const feedback = document.getElementById("feedback");

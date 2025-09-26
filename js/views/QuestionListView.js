@@ -88,44 +88,11 @@ const QuestionListView = (() => {
       return;
     }
     
-    // Special handling for Pokemon - show as image grid
-    if (tagToFilter === 'pokemon') {
-      allQuestionsList.innerHTML = `
-        <h3>Pokemon Questions (${questionsWithTag.length})</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; padding: 20px;">
-          ${questionsWithTag.map((q, i) => `
-            <div class="pokemon-box" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center;" data-idx="${i}">
-              <img src="${q.imageOrText}" alt="Pokemon" style="max-width: 80px; max-height: 80px; object-fit: contain;" onerror="this.style.display='none'"/>
-            </div>
-          `).join('')}
-        </div>
-      `;
-      
-      // Add click listeners for pokemon boxes
-      console.log('About to add click listeners. Checking dependencies:');
-      console.log('window.View exists:', !!window.View);
-      console.log('window.QuestionView exists:', !!window.QuestionView);
-      console.log('Number of pokemon boxes found:', allQuestionsList.querySelectorAll(".pokemon-box").length);
-      
-      if (window.View && window.QuestionView) {
-        allQuestionsList.querySelectorAll(".pokemon-box").forEach((box, i) => {
-          console.log('Adding click listener to pokemon box', i);
-          box.onclick = () => {
-            console.log('Pokemon box clicked, index:', i);
-            console.log('Switching to game screen...');
-            window.View.showScreen("game");
-            console.log('Rendering question:', questionsWithTag[i]);
-            window.QuestionView.renderQuestion(questionsWithTag[i]);
-          };
-        });
-        console.log('Successfully added all click listeners');
-      } else {
-        console.error('Dependencies missing:');
-        console.error('window.View:', window.View);
-        console.error('window.QuestionView:', window.QuestionView);
-      }
+    // Render all questions using the unified QuestionEditor
+    if (window.QuestionEditor) {
+      window.QuestionEditor.renderQuestionsWithEditor(questionsWithTag, tagToFilter, allQuestions, allQuestionsList);
     } else {
-      // For all other categories, show as a list with question details
+      // Fallback if QuestionEditor is not loaded
       allQuestionsList.innerHTML = `
         <h3>${tagToFilter.charAt(0).toUpperCase() + tagToFilter.slice(1)} Questions (${questionsWithTag.length})</h3>
         <div style="display: flex; flex-direction: column; gap: 16px; padding: 20px;">
@@ -140,22 +107,13 @@ const QuestionListView = (() => {
               </div>
               ${q.imageOrText && q.imageOrText.startsWith('http') ? 
                 `<div style="margin-top: 8px;"><img src="${q.imageOrText}" alt="Question image" style="max-width: 100px; max-height: 100px; object-fit: contain;"/></div>` : 
+                q.imageOrText ? 
+                `<div style="margin-top: 8px; color: #666; font-style: italic;">${q.imageOrText}</div>` : 
                 ''}
             </div>
           `).join('')}
         </div>
       `;
-      
-      // Add click listeners for question items
-      allQuestionsList.querySelectorAll(".question-item").forEach((item, i) => {
-        item.onclick = () => {
-          // Simply show the question using QuestionView - that's what preview is
-          if (window.View && window.QuestionView) {
-            window.View.showScreen("game");
-            window.QuestionView.renderQuestion(questionsWithTag[i]);
-          }
-        };
-      });
     }
   }
 
