@@ -3,11 +3,12 @@
    ================================= */
 
 :root {
-  /* Primary Colors - Under the Sea Theme */
-  --primary-orange: #FF6B35;        /* vibrant coral/orange fish */
-  --primary-yellow: #20B2AA;        /* light sea green/turquoise */
-  --primary-blue-gray: #003f5c;     /* deep ocean blue */
-  
+  /* Primary Colors */
+  --primary-orange: #3B82F6;
+  --primary-yellow: #60A5FA;
+  --primary-blue-gray: #1E293B;
+  --bg-main: #F1F5F9;
+
   /* Background Colors */
   --bg-main: #E0F6FF;               /* light ocean blue background */
   --bg-surface: #F0FFFE;            /* sea foam white for cards/inputs */
@@ -23,14 +24,6 @@
   --hover-color: #1e3a8a;           /* deeper blue for hover states */
   --focus-color: #0ea5e9;           /* bright ocean blue for focus */
   --border-color: #FF6B35;          /* coral for borders */
-  
-  /* Feedback Colors */
-  --success-color: #059669;         /* sea green for success */
-  --success-bg: #d1fae5;            /* light sea green background */
-  --error-color: #dc2626;
-  --error-bg: #fef2f2;
-  --info-color: #0284c7;            /* ocean blue for info */
-  --info-bg: #e0f2fe;               /* light ocean blue background */
   
   /* Shadow and Effects */
   --shadow-light: rgba(0, 63, 92, 0.1);     /* soft ocean shadow */
@@ -52,13 +45,7 @@
 
 /* Cool Blue Theme */
 /*
-:root {
-  --primary-orange: #3B82F6;
-  --primary-yellow: #60A5FA;
-  --primary-blue-gray: #1E293B;
-  --bg-main: #F1F5F9;
-}
-*/
+/* Primary Colors - Under the Sea Theme FF6B35 20B2AA 003f5c */ 
 
 /* Forest Green Theme */
 /*

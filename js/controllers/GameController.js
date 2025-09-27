@@ -40,7 +40,6 @@ const GameController = (() => {
 
   const handleTimeOut = () => {
     QuestionView.showCorrectAnswer(currentQuestion);
-    View.showFeedback("⏰ Time's up!");
     setTimeout(() => {
       nextQuestion();
     }, 3000); // Extended to 3 seconds to read the answer
@@ -54,7 +53,6 @@ const GameController = (() => {
       clearAnswerInput();
       startTimer();
     } else {
-      View.showFeedback("No more questions available!");
       stopTimer();
     }
   };
@@ -113,13 +111,11 @@ const GameController = (() => {
 
     if (currentQuestion.acceptableAnswers.includes(userInput)) {
       QuestionView.showCorrectAnswer(currentQuestion);
-      View.showFeedback("✅ Correct!");
       setTimeout(() => {
         nextQuestion();
       }, 3000); // Extended to 3 seconds to read the answer
     } else {
       QuestionView.showCorrectAnswer(currentQuestion);
-      View.showFeedback("❌ Incorrect!");
       setTimeout(() => {
         nextQuestion();
       }, 3000); // Extended to 3 seconds to read the answer

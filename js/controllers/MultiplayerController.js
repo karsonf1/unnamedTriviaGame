@@ -16,7 +16,6 @@ const MultiplayerController = (() => {
       players = data.players;
       showLobby();
       updatePlayerList();
-      showFeedback('Room created successfully!', 'success');
     });
 
     // Successfully joined a room
@@ -26,31 +25,28 @@ const MultiplayerController = (() => {
       players = data.players;
       showLobby();
       updatePlayerList();
-      showFeedback('Joined room successfully!', 'success');
     });
 
     // Failed to join room
     socket.on('joinError', (data) => {
-      showFeedback(data.message, 'error');
+      // Could add some visual indication here if needed
+      console.log('Join error:', data.message);
     });
 
     // Another player joined the room
     socket.on('playerJoined', (data) => {
       players = data.players;
       updatePlayerList();
-      showFeedback(`${data.player.name} joined the room!`, 'info');
     });
 
     // A player left the room
     socket.on('playerLeft', (data) => {
       players = data.players;
       updatePlayerList();
-      showFeedback('A player left the room.', 'info');
     });
 
     // Game started
     socket.on('gameStarted', (data) => {
-      showFeedback('Game starting...', 'success');
       setTimeout(() => {
         startMultiplayerGame();
       }, 2000);
@@ -70,21 +66,6 @@ const MultiplayerController = (() => {
     socket.on('playerAnswered', (data) => {
       showPlayerAnswer(data.playerId, data.playerName, data.answer);
     });
-  };
-
-  // Show feedback messages
-  const showFeedback = (message, type = 'info') => {
-    const feedback = document.getElementById('lobby-feedback');
-    if (feedback) {
-      feedback.textContent = message;
-      feedback.className = `feedback-${type}`;
-      
-      // Clear after 4 seconds
-      setTimeout(() => {
-        feedback.textContent = '';
-        feedback.className = '';
-      }, 4000);
-    }
   };
 
   // Update the player list display

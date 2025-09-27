@@ -15,9 +15,6 @@ const View = (() => {
       // For admin, use block to allow grid layouts
       screens[screenName].style.display = screenName === "admin" ? "block" : "flex";
     }
-    // Optionally clear feedback when switching screens
-    const feedback = document.getElementById("feedback");
-    if (feedback) feedback.textContent = "";
   };
 
   const renderQuestion = (questionObj) => {
@@ -26,16 +23,11 @@ const View = (() => {
     }
   };
 
-  const showFeedback = (msg) => {
-    const feedback = document.getElementById("feedback");
-    if (feedback) feedback.textContent = msg;
-  };
-
   const renderTags = (tags) => {
     const tagList = document.getElementById("tag-list");
     tagList.innerHTML = tags.map(tag => `<button class="tag-btn" data-tag="${tag}">${tag}</button>`).join(" ");
   };
 
-  return { showScreen, renderQuestion, showFeedback, renderTags };
+  return { showScreen, renderQuestion, renderTags };
 })();
 window.View = View;

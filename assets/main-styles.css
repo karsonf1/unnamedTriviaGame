@@ -154,13 +154,6 @@ label {
   color: var(--text-secondary);
 }
 
-#feedback {
-  font-weight: bold;
-  text-align: center;
-  margin-top: 10px;
-  color: var(--text-primary);
-}
-
 /* Question display styling */
 #question-display {
   text-align: center;
@@ -319,30 +312,6 @@ label {
   margin: 10px 0;
   font-size: 1.2em;
   letter-spacing: 1px;
-}
-
-.feedback-success {
-  color: var(--success-color) !important;
-  background: var(--success-bg);
-  padding: 8px 12px;
-  border-radius: 6px;
-  border-left: 4px solid var(--success-color);
-}
-
-.feedback-error {
-  color: var(--error-color) !important;
-  background: var(--error-bg);
-  padding: 8px 12px;
-  border-radius: 6px;
-  border-left: 4px solid var(--error-color);
-}
-
-.feedback-info {
-  color: var(--info-color) !important;
-  background: var(--info-bg);
-  padding: 8px 12px;
-  border-radius: 6px;
-  border-left: 4px solid var(--info-color);
 }
 
 /* Input styling for multiplayer forms */
