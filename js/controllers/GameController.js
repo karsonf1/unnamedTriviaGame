@@ -1,7 +1,8 @@
 const GameController = (() => {
   let currentQuestion = null;
   let gameTimer = null;
-  let timeRemaining = 10;
+  let timeRemaining = 10000; // 10 seconds in milliseconds
+  let questionStartTime = 0; // Track when question started
   let isAnswerSubmitted = false; // Prevent multiple submissions
   let answerCheckTimeout = null; // For debouncing real-time checking
 
@@ -20,18 +21,22 @@ const GameController = (() => {
 
   // ------------------ timer functions ------------------
   const startTimer = () => {
-    timeRemaining = 10;
+    questionStartTime = Date.now();
+    timeRemaining = 10000; // 10 seconds in milliseconds
+    
     clearInterval(gameTimer);
     
     gameTimer = setInterval(() => {
-      timeRemaining--;
+      const elapsed = Date.now() - questionStartTime;
+      timeRemaining = Math.max(0, 10000 - elapsed);
+      
       QuestionView.updateTimer(timeRemaining);
       
       if (timeRemaining <= 0) {
         clearInterval(gameTimer);
         handleTimeOut();
       }
-    }, 1000);
+    }, 50); // Update every 50ms for smooth countdown
   };
 
   const stopTimer = () => {
@@ -39,8 +44,9 @@ const GameController = (() => {
   };
 
   const handleTimeOut = () => {
+    const timeElapsed = Date.now() - questionStartTime;
     QuestionView.showCorrectAnswer(currentQuestion);
-    View.showFeedback("⏰ Time's up!");
+    QuestionView.showTimeElapsed(timeElapsed, false); // false = timeout
     setTimeout(() => {
       nextQuestion();
     }, 3000); // Extended to 3 seconds to read the answer
@@ -54,8 +60,8 @@ const GameController = (() => {
       clearAnswerInput();
       startTimer();
     } else {
-      View.showFeedback("No more questions available!");
       stopTimer();
+      // Could add a "No more questions" display here if needed
     }
   };
 
@@ -108,22 +114,17 @@ const GameController = (() => {
     if (!currentQuestion) return;
 
     isAnswerSubmitted = true; // Set flag to prevent multiple submissions
+    const timeElapsed = Date.now() - questionStartTime;
     stopTimer();
     clearTimeout(answerCheckTimeout); // Clear any pending checks
 
-    if (currentQuestion.acceptableAnswers.includes(userInput)) {
-      QuestionView.showCorrectAnswer(currentQuestion);
-      View.showFeedback("✅ Correct!");
-      setTimeout(() => {
-        nextQuestion();
-      }, 3000); // Extended to 3 seconds to read the answer
-    } else {
-      QuestionView.showCorrectAnswer(currentQuestion);
-      View.showFeedback("❌ Incorrect!");
-      setTimeout(() => {
-        nextQuestion();
-      }, 3000); // Extended to 3 seconds to read the answer
-    }
+    const isCorrect = currentQuestion.acceptableAnswers.includes(userInput);
+    QuestionView.showCorrectAnswer(currentQuestion);
+    QuestionView.showTimeElapsed(timeElapsed, isCorrect);
+    
+    setTimeout(() => {
+      nextQuestion();
+    }, 3000); // Extended to 3 seconds to read the answer
   };
 
   // ------------------ add question form ----------------

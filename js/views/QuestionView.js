@@ -27,19 +27,20 @@ const QuestionView = (() => {
     
     // Reset timer display
     if (timerDisplay) {
-      timerDisplay.textContent = "Time: 10";
+      timerDisplay.textContent = "Time: 10.000s";
       timerDisplay.style.color = "#B23A48"; /* accent color */
     }
   };
 
-  const updateTimer = (seconds) => {
+  const updateTimer = (milliseconds) => {
     if (timerDisplay) {
-      timerDisplay.textContent = `Time: ${seconds}`;
+      const seconds = (milliseconds / 1000).toFixed(3);
+      timerDisplay.textContent = `Time: ${seconds}s`;
       
       // Change color as time runs out
-      if (seconds <= 3) {
+      if (milliseconds <= 3000) {
         timerDisplay.style.color = "#dc2626"; // red
-      } else if (seconds <= 5) {
+      } else if (milliseconds <= 5000) {
         timerDisplay.style.color = "#ea580c"; // orange
       } else {
         timerDisplay.style.color = "#B23A48"; // accent color default
@@ -68,6 +69,34 @@ const QuestionView = (() => {
     questionDisplay.innerHTML = html;
   };
 
+  const showTimeElapsed = (timeElapsedMs, isCorrect) => {
+    const seconds = (timeElapsedMs / 1000).toFixed(3);
+    let message, bgColor, icon;
+    
+    if (isCorrect === true) {
+      message = `✅ Correct! Time: ${seconds}s`;
+      bgColor = "#16a34a"; // green
+      icon = "✅";
+    } else if (isCorrect === false) {
+      message = `❌ Incorrect! Time: ${seconds}s`;
+      bgColor = "#dc2626"; // red  
+      icon = "❌";
+    } else {
+      message = `⏰ Time's up! Total: ${seconds}s`;
+      bgColor = "#ea580c"; // orange
+      icon = "⏰";
+    }
+    
+    // Update timer display to show elapsed time
+    if (timerDisplay) {
+      timerDisplay.innerHTML = `
+        <div style="background: ${bgColor}; color: white; padding: 10px 15px; border-radius: 8px; font-size: 18px; font-weight: bold;">
+          ${message}
+        </div>
+      `;
+    }
+  };
+
   const hideTimer = () => {
     if (timerDisplay) {
       timerDisplay.style.display = "none";
@@ -80,6 +109,6 @@ const QuestionView = (() => {
     }
   };
 
-  return { renderQuestion, updateTimer, hideTimer, showTimer, showCorrectAnswer };
+  return { renderQuestion, updateTimer, hideTimer, showTimer, showCorrectAnswer, showTimeElapsed };
 })();
 window.QuestionView = QuestionView;

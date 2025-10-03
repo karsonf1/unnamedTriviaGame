@@ -13,7 +13,12 @@
   }
 
   console.log('Adding default category questions...');
-
+  Model.addQuestion({
+    question: "What is this character from My Hero Academia's name?",
+    acceptableAnswers: ["tenya iida, ida, tenya, ingenium"],
+    imageOrText: "https://i.imgur.com/T4cS5zP.gif",
+    tags: ["anime", "manga", "my hero academia", "entertainment"]
+  });
   // History questions
   Model.addQuestion({
     question: "What year did World War II end?",

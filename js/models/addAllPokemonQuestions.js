@@ -1,8 +1,31 @@
 // Utility to bulk add "Who's that Pokemon?" questions for all Pokémon
 // Run this ONCE to populate the model with all Pokémon questions
 
-
 (function addAllPokemonQuestions() {
+  // Custom overrides for specific Pokemon
+  // Add entries here to use custom images/questions instead of the default ones
+  const pokemonOverrides = {
+    1: { // Bulbasaur
+      question: "What's this grass starter Pokemon?",
+      acceptableAnswers: ["bulbasaur", "bulba"],
+      imageOrText: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png", // Official Pokemon artwork
+      tags: ["pokemon"]
+    },
+    25: { // Pikachu
+      question: "Who's the electric mouse Pokemon mascot?",
+      acceptableAnswers: ["pikachu", "pika"],
+      imageOrText: "https://i.imgur.com/68K1S03.gif",
+      tags: ["pokemon", "mascot"]
+    },
+    // Add more custom Pokemon here:
+    // 150: { // Mewtwo
+    //   question: "Which legendary psychic Pokemon was created in a lab?",
+    //   acceptableAnswers: ["mewtwo"],
+    //   imageOrText: "https://your-custom-image-url.com/mewtwo.png",
+    //   tags: ["pokemon", "legendary", "psychic"]
+    // }
+  };
+
   // 1 to 1010 (Gen 1-9 as of 2025, adjust as needed)
   const TOTAL_POKEMON = 1010;
   // Get all existing questions with pokemon tag and their image URLs
@@ -15,15 +38,122 @@
     // ... (Gen 2-9 names go here, omitted for brevity in this patch, but should be included in your actual file)
   ];
   for (let i = 1; i <= TOTAL_POKEMON; i++) {
-    const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i}.png`;
+    let imageUrl;
+    if (i < 10) {
+     imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/00${i}.png`;
+    }
+    if (i > 9 && i < 100) {
+     imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/0${i}.png`;
+    }
+    else if (i < 10 && i > 0) {
+     imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/00${i}.png`;
+    }
+    else{
+     imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${i}.png`;
+
+    }
     if (!existing.includes(imageUrl)) {
-      const name = pokemonNames[i] ? pokemonNames[i].toLowerCase() : i.toString();
-      Model.addQuestion({
-        question: "Who's that Pokemon?",
-        acceptableAnswers: [name],
-        imageOrText: imageUrl,
-        tags: ["pokemon"]
-      });
+      // Check if there's a custom override for this Pokemon
+      if (pokemonOverrides[i]) {
+        // Use custom override
+        const override = pokemonOverrides[i];
+        Model.addQuestion({
+          question: override.question,
+          acceptableAnswers: override.acceptableAnswers,
+          imageOrText: override.imageOrText,
+          tags: override.tags
+        });
+        console.log(`Added custom Pokemon #${i}: ${override.question}`);
+      } else {
+        // Use default generation
+        const name = pokemonNames[i] ? pokemonNames[i].toLowerCase() : i.toString();
+        Model.addQuestion({
+          question: "Who's that Pokemon?",
+          acceptableAnswers: [name],
+          imageOrText: imageUrl,
+          tags: ["pokemon"]
+        });
+      }
     }
   }
+  
+  console.log(`Pokemon questions generation complete!`);
 })();
+
+// Function to reload Pokemon questions with custom overrides
+// Call this after making changes to pokemonOverrides
+window.reloadPokemonQuestions = function() {
+  console.log('🔄 Reloading Pokemon questions with custom overrides...');
+  
+  // Get current questions
+  const allQuestions = Model.getQuestions();
+  
+  // Remove all existing Pokemon questions
+  const nonPokemonQuestions = allQuestions.filter(q => !q.tags.includes("pokemon"));
+  
+  // Clear localStorage and reload with non-Pokemon questions
+  localStorage.setItem("hipsterTriviaUserQuestions", JSON.stringify(
+    nonPokemonQuestions.filter(q => {
+      // Keep only user-added questions (not permanent ones)
+      const permanentQuestions = window.PermanentQuestions || [];
+      return !permanentQuestions.some(perm => 
+        perm.question === q.question && 
+        JSON.stringify(perm.acceptableAnswers.sort()) === JSON.stringify(q.acceptableAnswers.sort())
+      );
+    })
+  ));
+  
+  // Reload the model to get fresh permanent questions
+  Model.load();
+  
+  // Re-run the Pokemon generation with the same logic as the main function
+  const pokemonOverrides = {
+    1: { // Bulbasaur
+      question: "What's this grass starter Pokemon?",
+      acceptableAnswers: ["bulbasaur", "bulba"],
+      imageOrText: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png",
+      tags: ["pokemon", "starter", "grass"]
+    },
+    25: { // Pikachu
+      question: "Who's the electric mouse Pokemon mascot?",
+      acceptableAnswers: ["pikachu", "pika"],
+      imageOrText: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
+      tags: ["pokemon", "electric", "mascot"]
+    }
+    // Add the same overrides as in the main function
+  };
+  
+  const TOTAL_POKEMON = 1010;
+  const existing = (Model.getQuestions(["pokemon"]) || []).map(q => q.imageOrText);
+  const pokemonNames = [
+    null,
+    "bulbasaur", "ivysaur", "venusaur", "charmander", "charmeleon", "charizard", "squirtle", "wartortle", "blastoise", "caterpie", "metapod", "butterfree", "weedle", "kakuna", "beedrill", "pidgey", "pidgeotto", "pidgeot", "rattata", "raticate", "spearow", "fearow", "ekans", "arbok", "pikachu", "raichu", "sandshrew", "sandslash", "nidoran", "nidorina", "nidoqueen", "nidoran", "nidorino", "nidoking", "clefairy", "clefable", "vulpix", "ninetales", "jigglypuff", "wigglytuff", "zubat", "golbat", "oddish", "gloom", "vileplume", "paras", "parasect", "venonat", "venomoth", "diglett", "dugtrio", "meowth", "persian", "psyduck", "golduck", "mankey", "primeape", "growlithe", "arcanine", "poliwag", "poliwhirl", "poliwrath", "abra", "kadabra", "alakazam", "machop", "machoke", "machamp", "bellsprout", "weepinbell", "victreebel", "tentacool", "tentacruel", "geodude", "graveler", "golem", "ponyta", "rapidash", "slowpoke", "slowbro", "magnemite", "magneton", "farfetch'd", "doduo", "dodrio", "seel", "dewgong", "grimer", "muk", "shellder", "cloyster", "gastly", "haunter", "gengar", "onix", "drowzee", "hypno", "krabby", "kingler", "voltorb", "electrode", "exeggcute", "exeggutor", "cubone", "marowak", "hitmonlee", "hitmonchan", "lickitung", "koffing", "weezing", "rhyhorn", "rhydon", "chansey", "tangela", "kangaskhan", "horsea", "seadra", "goldeen", "seaking", "staryu", "starmie", "mr. mime", "scyther", "jynx", "electabuzz", "magmar", "pinsir", "tauros", "magikarp", "gyarados", "lapras", "ditto", "eevee", "vaporeon", "jolteon", "flareon", "porygon", "omanyte", "omastar", "kabuto", "kabutops", "aerodactyl", "snorlax", "articuno", "zapdos", "moltres", "dratini", "dragonair", "dragonite", "mewtwo", "mew"
+    // ... rest of the pokemon names (truncated for brevity)
+  ];
+  
+  for (let i = 1; i <= TOTAL_POKEMON; i++) {
+    const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i}.png`;
+    if (!existing.includes(imageUrl)) {
+      if (pokemonOverrides[i]) {
+        const override = pokemonOverrides[i];
+        Model.addQuestion({
+          question: override.question,
+          acceptableAnswers: override.acceptableAnswers,
+          imageOrText: override.imageOrText,
+          tags: override.tags
+        });
+      } else {
+        const name = pokemonNames[i] ? pokemonNames[i].toLowerCase() : i.toString();
+        Model.addQuestion({
+          question: "Who's that Pokemon?",
+          acceptableAnswers: [name],
+          imageOrText: imageUrl,
+          tags: ["pokemon"]
+        });
+      }
+    }
+  }
+  
+  console.log('✅ Pokemon questions reloaded successfully!');
+  console.log(`Total questions now: ${Model.getQuestions().length}`);
+};
