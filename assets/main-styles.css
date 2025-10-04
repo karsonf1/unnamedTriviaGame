@@ -46,7 +46,31 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+#browse-heading {
+  font-family: 'MightySouly', sans-serif;
+  font-weight: normal;
+  font-size : 2.5em;
+  color: var(--primary-blue-gray);
+  text-align: center;
+  position: relative;
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 4px var(--shadow-light);
+}
 
+#tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.tag-btn {
+  display: inline-flex;
+  min-width: auto;
+  padding: 10px 20px;
+  margin: 0;
+}
 #admin-screen {
   background-color: var(--primary-yellow);
   padding: 40px 50px;
@@ -96,13 +120,20 @@ button {
   color: var(--text-light);
   border: none;
   border-radius: 12px;
+  margin-top: auto;
+  margin-bottom: auto;
   cursor: pointer;
   font-family: 'MightySouly', sans-serif;
   font-weight: normal;
-  font-size: 18px;
+  font-size: 14px;
   letter-spacing: 1px;
   transition: all 0.3s ease;
   min-width: 200px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:8px;
 }
 
 button:hover {
